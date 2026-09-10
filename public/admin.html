@@ -113,6 +113,9 @@
                     <a href="index.html" target="_blank" class="hidden sm:flex items-center gap-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 px-3 py-1.5 rounded-lg text-xs font-bold transition">
                         <i class="fas fa-store"></i> View Customer Website
                     </a>
+                    <button onclick="openGroqKeyModal()" class="bg-gold-500 hover:bg-gold-600 text-maroon-950 px-3.5 py-1.5 rounded-lg text-xs font-black transition shadow-md flex items-center gap-1.5 border-2 border-gold-400 transform active:scale-95">
+                        <i class="fas fa-robot text-maroon-950"></i> <span class="text-maroon-950 font-black">AI Groq Key</span>
+                    </button>
                     <button onclick="openChangePinModal()" class="bg-amber-400 hover:bg-amber-500 text-maroon-950 px-3.5 py-1.5 rounded-lg text-xs font-black transition shadow-md flex items-center gap-1.5 border-2 border-amber-300 transform active:scale-95">
                         <i class="fas fa-key text-maroon-950"></i> <span class="text-maroon-950 font-black">Change Passcode</span>
                     </button>
@@ -547,6 +550,58 @@
                         Update Passcode
                     </button>
                 </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Groq AI Key Settings Modal -->
+    <div id="groq-key-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-gold-500 space-y-6">
+            <div class="flex justify-between items-center border-b border-amber-200 pb-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-maroon-900 text-gold-400 flex items-center justify-center text-lg shadow">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg font-serif text-maroon-900">Groq AI Key Manager</h3>
+                        <p class="text-xs text-amber-800 font-semibold">Server-Side AI Assistant Credentials</p>
+                    </div>
+                </div>
+                <button onclick="closeGroqKeyModal()" class="text-gray-400 hover:text-gray-700 text-lg"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="bg-amber-50/80 p-3.5 rounded-2xl border border-amber-200 text-xs space-y-1.5">
+                <div class="flex items-center justify-between font-bold">
+                    <span class="text-gray-700">Current Status:</span>
+                    <span id="groq-key-status" class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800 border border-red-300">
+                        No Key Set
+                    </span>
+                </div>
+                <p id="groq-masked-key-display" class="text-xs font-mono text-gray-700 mt-1 font-bold">Key: None configured</p>
+                <p class="text-[11px] text-gray-600 leading-tight pt-1">
+                    Your Groq API key is stored securely <strong>server-side only</strong> in <code>database/store_data.json</code> and never exposed publicly to website visitors.
+                </p>
+            </div>
+
+            <form id="groq-key-form" onsubmit="handleSaveGroqKeySubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-maroon-900 mb-1">Enter New Groq API Key:</label>
+                    <input 
+                        type="text" 
+                        id="groq-api-key-input" 
+                        placeholder="e.g. gsk_..." 
+                        class="w-full text-xs font-mono font-bold py-2.5 px-3 bg-white text-black border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-inner"
+                    >
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="submit" class="flex-1 bg-maroon-800 hover:bg-maroon-900 text-gold-300 py-2.5 rounded-xl font-bold text-xs shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fas fa-save"></i> Save Groq Key
+                    </button>
+                    <button type="button" onclick="clearGroqApiKey()" class="bg-red-100 hover:bg-red-200 text-red-800 font-bold px-3 py-2.5 rounded-xl text-xs transition border border-red-300">
+                        Remove Key
+                    </button>
+                </div>
+                <p id="groq-key-feedback" class="text-xs font-bold text-center hidden"></p>
             </form>
         </div>
     </div>

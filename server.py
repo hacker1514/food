@@ -15,7 +15,10 @@ PUBLIC_DIR = os.path.join(os.path.dirname(__file__), 'public')
 
 # Secure Server-Side Configuration
 ADMIN_PIN = "1514"
-GROQ_API_KEY = "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"
+
+def get_groq_api_key():
+    data = load_store_data()
+    return str(data.get("groq_api_key", os.environ.get("GROQ_API_KEY", ""))).strip()
 
 # Default Initial Menu Items Data
 DEFAULT_MENU = [
@@ -257,6 +260,10 @@ class SkandaRequestHandler(SimpleHTTPRequestHandler):
             if path == '/api/admin/stats':
                 return self.handle_get_stats()
 
+            # API: Admin Get Groq Key Status
+            if path == '/api/admin/groq-key':
+                return self.handle_get_groq_key()
+
             return super().do_GET()
         except Exception as e:
             import traceback
@@ -291,6 +298,10 @@ class SkandaRequestHandler(SimpleHTTPRequestHandler):
             # API: Admin Change Passcode
             if path == '/api/admin/change-pin':
                 return self.handle_change_admin_pin(payload)
+
+            # API: Admin Save Groq API Key
+            if path == '/api/admin/groq-key':
+                return self.handle_save_groq_key(payload)
 
             # API: AI Assistant
             if path == '/api/chat':
@@ -530,6 +541,30 @@ class SkandaRequestHandler(SimpleHTTPRequestHandler):
             "message": "Admin Passcode updated successfully!"
         })
 
+    def handle_get_groq_key(self):
+        key = get_groq_api_key()
+        has_key = bool(key)
+        masked = f"{key[:5]}...{key[-4:]}" if len(key) >= 10 else ("Key Configured" if has_key else "None")
+        self.send_json_response(200, {
+            "success": True,
+            "has_key": has_key,
+            "masked_key": masked
+        })
+
+    def handle_save_groq_key(self, payload):
+        new_key = str(payload.get('groq_api_key', '')).strip()
+        data = load_store_data()
+        data["groq_api_key"] = new_key
+        save_store_data(data)
+        has_key = bool(new_key)
+        masked = f"{new_key[:5]}...{new_key[-4:]}" if len(new_key) >= 10 else ("Key Configured" if has_key else "None")
+        self.send_json_response(200, {
+            "success": True,
+            "message": "Groq API Key updated successfully!" if has_key else "Groq API Key removed!",
+            "has_key": has_key,
+            "masked_key": masked
+        })
+
     def handle_get_orders(self, parsed):
         params = parse_qs(parsed.query)
         status_filter = params.get('status', ['all'])[0]
@@ -647,43 +682,45 @@ INSTRUCTIONS:
 
         messages.append({'role': 'user', 'content': user_message})
 
-        candidate_models = [
-            'qwen/qwen3.6-27b',
-            'openai/gpt-oss-20b',
-            'groq/compound',
-            'llama-3.3-70b-versatile',
-            'llama-3.1-8b-instant'
-        ]
-
+        active_groq_key = get_groq_api_key()
         reply = None
 
-        for model_name in candidate_models:
-            try:
-                groq_payload = json.dumps({
-                    'model': model_name,
-                    'messages': messages,
-                    'temperature': 0.6,
-                    'max_tokens': 500
-                }).encode('utf-8')
+        if active_groq_key:
+            candidate_models = [
+                'qwen/qwen3.6-27b',
+                'openai/gpt-oss-20b',
+                'groq/compound',
+                'llama-3.3-70b-versatile',
+                'llama-3.1-8b-instant'
+            ]
 
-                req = urllib.request.Request(
-                    'https://api.groq.com/openai/v1/chat/completions',
-                    data=groq_payload,
-                    headers={
-                        'Authorization': f'Bearer {GROQ_API_KEY}',
-                        'Content-Type': 'application/json',
-                        'User-Agent': 'Mozilla/5.0'
-                    }
-                )
+            for model_name in candidate_models:
+                try:
+                    groq_payload = json.dumps({
+                        'model': model_name,
+                        'messages': messages,
+                        'temperature': 0.6,
+                        'max_tokens': 500
+                    }).encode('utf-8')
 
-                res = urllib.request.urlopen(req, timeout=10)
-                groq_response = json.loads(res.read().decode('utf-8'))
-                reply = groq_response['choices'][0]['message']['content'].strip()
-                if reply:
-                    break
-            except Exception as model_err:
-                print(f"Groq Model {model_name} failed: {model_err}")
-                continue
+                    req = urllib.request.Request(
+                        'https://api.groq.com/openai/v1/chat/completions',
+                        data=groq_payload,
+                        headers={
+                            'Authorization': f'Bearer {active_groq_key}',
+                            'Content-Type': 'application/json',
+                            'User-Agent': 'Mozilla/5.0'
+                        }
+                    )
+
+                    res = urllib.request.urlopen(req, timeout=10)
+                    groq_response = json.loads(res.read().decode('utf-8'))
+                    reply = groq_response['choices'][0]['message']['content'].strip()
+                    if reply:
+                        break
+                except Exception as model_err:
+                    print(f"Groq Model {model_name} failed: {model_err}")
+                    continue
 
         if not reply:
             reply = "Namaste! 🙏 Thank you for contacting Sri Skanda Home Foods. We offer authentic South Indian Brahmin podis, pure ghee laddus, and traditional sweets made fresh in small batches with zero artificial preservatives. You can browse our complete menu, select pack weights (100g to 1kg), and place your order directly via WhatsApp at +91 94900 68924!"

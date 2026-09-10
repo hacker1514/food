@@ -738,3 +738,97 @@ async function handleChangePinSubmit(event) {
         showAdminToast("Error updating passcode. Please try again.", "error");
     }
 }
+
+// --- GROQ AI KEY MANAGER ---
+async function openGroqKeyModal() {
+    const modal = document.getElementById('groq-key-modal');
+    const feedback = document.getElementById('groq-key-feedback');
+    if (feedback) feedback.classList.add('hidden');
+    if (modal) modal.classList.remove('hidden');
+    await fetchGroqKeyStatus();
+}
+
+function closeGroqKeyModal() {
+    const modal = document.getElementById('groq-key-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
+async function fetchGroqKeyStatus() {
+    const statusBadge = document.getElementById('groq-key-status');
+    const maskedDisplay = document.getElementById('groq-masked-key-display');
+
+    try {
+        const res = await fetch('/api/admin/groq-key');
+        const data = await res.json();
+
+        if (data.success) {
+            if (data.has_key) {
+                if (statusBadge) {
+                    statusBadge.innerText = "ACTIVE KEY SET";
+                    statusBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-green-100 text-green-800 border border-green-300";
+                }
+                if (maskedDisplay) maskedDisplay.innerText = `Key: ${data.masked_key}`;
+            } else {
+                if (statusBadge) {
+                    statusBadge.innerText = "NO KEY SET";
+                    statusBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-800 border border-red-300";
+                }
+                if (maskedDisplay) maskedDisplay.innerText = "Key: None configured";
+            }
+        }
+    } catch (err) {
+        console.error("Error fetching Groq key status:", err);
+    }
+}
+
+async function handleSaveGroqKeySubmit(event) {
+    event.preventDefault();
+    const input = document.getElementById('groq-api-key-input');
+    const key = input ? input.value.trim() : '';
+
+    if (!key) {
+        showAdminToast("Please enter a valid Groq API key!", "warning");
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/admin/groq-key', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ groq_api_key: key })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showAdminToast(data.message || "Groq API Key saved successfully!", "success");
+            if (input) input.value = '';
+            await fetchGroqKeyStatus();
+        } else {
+            showAdminToast(data.message || "Failed to save Groq API Key.", "error");
+        }
+    } catch (err) {
+        showAdminToast("Error saving Groq API Key.", "error");
+    }
+}
+
+async function clearGroqApiKey() {
+    if (!confirm("Are you sure you want to remove the server-side Groq API Key?")) return;
+
+    try {
+        const res = await fetch('/api/admin/groq-key', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ groq_api_key: '' })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showAdminToast("Groq API Key removed successfully!", "success");
+            const input = document.getElementById('groq-api-key-input');
+            if (input) input.value = '';
+            await fetchGroqKeyStatus();
+        } else {
+            showAdminToast("Failed to remove key.", "error");
+        }
+    } catch (err) {
+        showAdminToast("Error removing Groq API key.", "error");
+    }
+}
