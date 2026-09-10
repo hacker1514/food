@@ -659,6 +659,7 @@ You are polite, warm, helpful, and deeply knowledgeable about authentic South In
 BRAND & BUSINESS INFORMATION:
 - Brand Name: Sri Skanda Home Foods
 - Tagline: PURE • AUTHENTIC • BRAHMIN FOODS
+- Web Platform Developer: Niranjan Kumar K
 - Phone & WhatsApp Order Contact: +91 94900 68924
 - Location: Near Madanapalle & All Over India Shipping
 - Key Quality Badges: 100% Homemade with Tradition & Love, Zero Preservatives & Additives, Freshly Prepared in Small Batches, Safe Moisture-Proof Packaging.
@@ -667,11 +668,13 @@ LIVE STORE MENU & PRICING:
 {chr(10).join(menu_summary)}
 
 INSTRUCTIONS:
+- Reply naturally, directly, and concisely like a real human customer care representative chatting on WhatsApp.
+- If asked about developer or application creator, state warmly: "Sri Skanda Home Foods web platform was developed by Niranjan Kumar K."
 - Answer customer questions accurately about prices, weight options, health benefits, ingredients, and delivery.
-- Keep responses concise, warm, polite, and well-structured using bullet points where applicable.
+- Keep responses concise, warm, polite, and well-structured using short natural bullet points.
 - Guide customers to click the "Add to Cart" or "WhatsApp Order" button on the website for quick ordering.
-- NEVER mention or recommend installing an application, app download, or PWA. Always focus on assisting with products, prices, and direct ordering.
-- NEVER mention "AI", "Groq", "OpenAI", "LLM", "bot", or artificial intelligence technology in your responses. Always speak naturally as the store customer assistant of Sri Skanda Home Foods.
+- NEVER output internal thinking steps, reasoning tags (<think>), meta-explanations, or AI model terminology. Always speak naturally as a real human customer assistant.
+- NEVER mention or recommend installing an application, app download, or PWA.
 """
 
         messages = [{'role': 'system', 'content': dynamic_prompt}]
@@ -715,9 +718,12 @@ INSTRUCTIONS:
 
                     res = urllib.request.urlopen(req, timeout=10)
                     groq_response = json.loads(res.read().decode('utf-8'))
-                    reply = groq_response['choices'][0]['message']['content'].strip()
-                    if reply:
-                        break
+                    raw_reply = groq_response['choices'][0]['message']['content'].strip()
+                    if raw_reply:
+                        import re
+                        reply = re.sub(r'<think>.*?</think>', '', raw_reply, flags=re.DOTALL).strip()
+                        if reply:
+                            break
                 except Exception as model_err:
                     print(f"Groq Model {model_name} failed: {model_err}")
                     continue

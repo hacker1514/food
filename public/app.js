@@ -1018,7 +1018,9 @@ function escapeHtml(str) {
 }
 
 function formatBotReply(text) {
-    let formatted = escapeHtml(text);
+    if (!text) return '';
+    let cleanText = text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    let formatted = escapeHtml(cleanText);
     formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     formatted = formatted.replace(/\n/g, '<br>');
     return formatted;
