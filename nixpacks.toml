@@ -1,0 +1,5 @@
+[providers]
+php = ["pdo", "pdo_mysql", "pdo_sqlite", "sqlite3", "intl", "gd", "zip", "bcmath"]
+
+[variables]
+DB_CONNECTION = "sqlite"
