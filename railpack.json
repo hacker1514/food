@@ -1,28 +1,5 @@
 {
-  "packages": {
-    "php": {
-      "extensions": [
-        "ctype",
-        "curl",
-        "dom",
-        "fileinfo",
-        "filter",
-        "hash",
-        "mbstring",
-        "openssl",
-        "pcre",
-        "pdo",
-        "pdo_mysql",
-        "pdo_sqlite",
-        "sqlite3",
-        "intl",
-        "gd",
-        "zip",
-        "bcmath",
-        "session",
-        "tokenizer",
-        "xml"
-      ]
-    }
+  "deploy": {
+    "startCommand": "python server.py"
   }
 }

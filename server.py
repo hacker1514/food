@@ -8,7 +8,7 @@ import urllib.request
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 
-PORT = 8000
+PORT = int(os.environ.get('PORT', 8000))
 DB_DIR = os.path.join(os.path.dirname(__file__), 'database')
 DATA_PATH = os.path.join(DB_DIR, 'store_data.json')
 PUBLIC_DIR = os.path.join(os.path.dirname(__file__), 'public')
@@ -694,7 +694,7 @@ INSTRUCTIONS:
 if __name__ == '__main__':
     print(f"Starting Sri Skanda Executive Server on http://127.0.0.1:{PORT}")
     handler = functools.partial(SkandaRequestHandler, directory=PUBLIC_DIR)
-    server = HTTPServer(('127.0.0.1', PORT), handler)
+    server = HTTPServer(('0.0.0.0', PORT), handler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
