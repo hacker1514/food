@@ -1626,3 +1626,73 @@ window.openOrderDetailModal = openOrderDetailModal;
 window.closeOrderDetailModal = closeOrderDetailModal;
 window.syncCustomerOrders = syncCustomerOrders;
 window.searchCustomerOrdersByPhone = searchCustomerOrdersByPhone;
+
+// --- SMART PWA INSTALLATION & AUTO-DISAPPEAR LOGIC ---
+let deferredPrompt = null;
+
+function isAppInstalled() {
+    return window.matchMedia('(display-mode: standalone)').matches || 
+           window.navigator.standalone === true || 
+           localStorage.getItem('skanda_app_installed') === 'true';
+}
+
+function updateInstallButtonVisibility() {
+    const installBtn = document.getElementById('header-install-app-btn');
+    if (!installBtn) return;
+
+    if (isAppInstalled()) {
+        installBtn.classList.add('hidden');
+        installBtn.style.display = 'none';
+    } else {
+        installBtn.classList.remove('hidden');
+        installBtn.style.display = 'inline-flex';
+    }
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    updateInstallButtonVisibility();
+});
+
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    localStorage.setItem('skanda_app_installed', 'true');
+    updateInstallButtonVisibility();
+});
+
+async function triggerPwaInstall() {
+    if (isAppInstalled()) {
+        updateInstallButtonVisibility();
+        return;
+    }
+
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            localStorage.setItem('skanda_app_installed', 'true');
+            deferredPrompt = null;
+            updateInstallButtonVisibility();
+        }
+    } else {
+        openPwaModal();
+    }
+}
+
+function openPwaModal() {
+    const modal = document.getElementById('pwa-install-modal');
+    if (modal) modal.classList.remove('hidden');
+}
+
+function closePwaModal() {
+    const modal = document.getElementById('pwa-install-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', updateInstallButtonVisibility);
+window.addEventListener('load', updateInstallButtonVisibility);
+
+window.triggerPwaInstall = triggerPwaInstall;
+window.openPwaModal = openPwaModal;
+window.closePwaModal = closePwaModal;
