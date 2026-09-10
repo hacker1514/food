@@ -1,9 +1,8 @@
+.git
+.github
+.idea
 .DS_Store
+__pycache__
+*.pyc
 node_modules
 vendor
-storage/*.key
-.env
-docker/Dockerfile
-tests
-docker-compose*
-.git
