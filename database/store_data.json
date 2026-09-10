@@ -1,0 +1,323 @@
+{
+  "menu_items": [
+    {
+      "id": "munaga-podi",
+      "name": "Munaga Podi",
+      "transliteration": "Drumstick Leaf / Moringa Powder",
+      "category": "podis",
+      "badge": "Bestseller",
+      "image": "images/podis.jpg",
+      "description": "Nutrient-rich Moringa leaf powder expertly blended with traditional Brahmin spices, garlic-free & wholesome.",
+      "healthBenefit": "Rich in iron, antioxidants & immunity boosters. Perfect with hot rice & cow ghee.",
+      "prices": {
+        "100g": 120,
+        "250g": 300,
+        "500g": 600,
+        "1kg": 1200
+      }
+    },
+    {
+      "id": "palli-podi",
+      "name": "Palli Podi",
+      "transliteration": "Spiced Peanut Powder",
+      "category": "podis",
+      "badge": "Protein Rich",
+      "image": "images/podis.jpg",
+      "description": "Slow-roasted premium groundnuts ground with roasted lentils, cumin, and mild Kashmiri red chilies.",
+      "healthBenefit": "High in plant protein & healthy fats. Delicious with Idli, Dosa, or steamed rice.",
+      "prices": {
+        "100g": 65,
+        "250g": 130,
+        "500g": 260,
+        "1kg": 520
+      }
+    },
+    {
+      "id": "nuvvula-podi",
+      "name": "Nuvvula Podi",
+      "transliteration": "Toasted Sesame Seed Powder",
+      "category": "podis",
+      "badge": "Calcium Power",
+      "image": "images/podis.jpg",
+      "description": "Aromatic white sesame seeds lightly toasted and ground with authentic South Indian spice mix.",
+      "healthBenefit": "Excellent source of calcium, zinc, and healthy dietary fiber.",
+      "prices": {
+        "100g": 80,
+        "250g": 185,
+        "500g": 360,
+        "1kg": 720
+      }
+    },
+    {
+      "id": "avisa-podi",
+      "name": "Avisa Podi",
+      "transliteration": "Flaxseed Spice Powder",
+      "category": "podis",
+      "badge": "Superfood",
+      "image": "images/podis.jpg",
+      "description": "Golden organic flax seeds slow-roasted and ground into a fragrant, earthy spice powder.",
+      "healthBenefit": "Loaded with Omega-3 fatty acids for heart & joint health. Enjoy daily with hot rice.",
+      "prices": {
+        "100g": 120,
+        "250g": 290,
+        "500g": 580,
+        "1kg": 1150
+      }
+    },
+    {
+      "id": "karivepaku-podi",
+      "name": "Karivepaku Podi",
+      "transliteration": "Fresh Curry Leaf Powder",
+      "category": "podis",
+      "badge": "Traditional",
+      "image": "images/podis.jpg",
+      "description": "Hand-picked farm fresh curry leaves sun-dried and pounded with pepper, cumin, and roasted chana dal.",
+      "healthBenefit": "Promotes hair growth, aids digestion, and controls blood sugar naturally.",
+      "prices": {
+        "100g": 80,
+        "250g": 170,
+        "500g": 340,
+        "1kg": 650
+      }
+    },
+    {
+      "id": "kobbari-podi",
+      "name": "Kobbari Podi",
+      "transliteration": "Coconut Spice Mix",
+      "category": "podis",
+      "badge": "Flavorful",
+      "image": "images/podis.jpg",
+      "description": "Grated sun-dried dry coconut (Kopra) tempered with lentils, red chilies, and aromatic asafoetida.",
+      "healthBenefit": "Rich, satisfying coastal aroma. Enhances vegetable stir-fries, tiffins, and rice.",
+      "prices": {
+        "100g": 110,
+        "250g": 270,
+        "500g": 530,
+        "1kg": 1050
+      }
+    },
+    {
+      "id": "rasam-powder",
+      "name": "Rasam Powder",
+      "transliteration": "Authentic Brahmin Rasam Podi",
+      "category": "podis",
+      "badge": "Signature Secret",
+      "image": "images/podis.jpg",
+      "description": "Heritage family recipe blend of coriander seeds, black pepper, cumin, turmeric, and fenugreek.",
+      "healthBenefit": "Instant comfort soup mix that boosts digestion and soothes throat & stomach.",
+      "prices": {
+        "100g": 90,
+        "250g": 175,
+        "500g": 330,
+        "1kg": 650
+      }
+    },
+    {
+      "id": "kandhi-podi",
+      "name": "Kandhi Podi",
+      "transliteration": "Toor Dal / Paruppu Podi",
+      "category": "podis",
+      "badge": "Comfort Food",
+      "image": "images/podis.jpg",
+      "description": "Golden roasted Toor Dal (pigeon peas) pounded with red chilies, black pepper, and hing.",
+      "healthBenefit": "Classic South Indian comfort dish. Serve with hot rice, pure ghee, and papad.",
+      "prices": {
+        "100g": 90,
+        "250g": 160,
+        "500g": 320,
+        "1kg": 640
+      }
+    },
+    {
+      "id": "putnala-podi",
+      "name": "Putnala Podi",
+      "transliteration": "Roasted Gram Dal Powder",
+      "category": "podis",
+      "badge": "Mild & Tasty",
+      "image": "images/podis.jpg",
+      "description": "Crispy fried chana dal blended with mild garlic, cumin, and sea salt. Light on the stomach.",
+      "healthBenefit": "Easy to digest protein snack powder, perfect for kids & elders.",
+      "prices": {
+        "100g": 65,
+        "250g": 160,
+        "500g": 320,
+        "1kg": 640
+      }
+    },
+    {
+      "id": "dry-fruit-laddu",
+      "name": "Dry Fruit Laddu",
+      "transliteration": "Sugar-Free Premium Energy Balls",
+      "category": "sweets",
+      "badge": "No Added Sugar",
+      "image": "images/sweets.jpg",
+      "description": "Rich combination of dates, figs, California almonds, cashews, and pistachios bound with pure ghee.",
+      "healthBenefit": "100% natural sweetness from dates & figs. Superior healthy stamina booster.",
+      "prices": {
+        "100g": 130,
+        "250g": 330,
+        "500g": 640,
+        "1kg": 1275
+      }
+    },
+    {
+      "id": "palli-chikki",
+      "name": "Palli Chikki",
+      "transliteration": "Peanut Jaggery Brittle",
+      "category": "sweets",
+      "badge": "Organic Jaggery",
+      "image": "images/sweets.jpg",
+      "description": "Crunchy golden roasted peanuts set in melted organic jaggery with a touch of cardamom.",
+      "healthBenefit": "High energy, rich in iron & healthy monounsaturated fats.",
+      "prices": {
+        "100g": 65,
+        "250g": 160,
+        "500g": 310,
+        "1kg": 625
+      }
+    },
+    {
+      "id": "nuvvula-chikki",
+      "name": "Nuvvula Chikki",
+      "transliteration": "Sesame Jaggery Brittle (Til Chikki)",
+      "category": "sweets",
+      "badge": "Mineral Rich",
+      "image": "images/sweets.jpg",
+      "description": "Traditional crunchy sesame seed bar sweetened with pure unrefined jaggery syrup.",
+      "healthBenefit": "Provides body warmth, strengthens bones, and enhances skin health.",
+      "prices": {
+        "100g": 65,
+        "250g": 160,
+        "500g": 310,
+        "1kg": 625
+      }
+    },
+    {
+      "id": "ragi-laddu",
+      "name": "Ragi Laddu",
+      "transliteration": "Finger Millet Sweet Balls",
+      "category": "sweets",
+      "badge": "Millet Special",
+      "image": "images/sweets.jpg",
+      "description": "Sprouted finger millet flour slow-cooked in pure cow ghee and organic jaggery.",
+      "healthBenefit": "Supercharged with calcium, fiber & iron. Ideal guilt-free sweet snack.",
+      "prices": {
+        "100g": 100,
+        "250g": 250,
+        "500g": 500,
+        "1kg": 1000
+      }
+    },
+    {
+      "id": "sunnundalu",
+      "name": "Sunnundalu",
+      "transliteration": "Roasted Black Gram / Urad Dal Laddu",
+      "category": "sweets",
+      "badge": "Authentic Classic",
+      "image": "images/sweets.jpg",
+      "description": "Traditional Andhra Brahmin specialty made from slow-roasted urad dal, pure ghee, and jaggery.",
+      "healthBenefit": "Strengthens spine & muscles. A timeless festive nourishing delicacy.",
+      "prices": {
+        "100g": 135,
+        "250g": 320,
+        "500g": 640,
+        "1kg": 1250
+      }
+    },
+    {
+      "id": "dry-gulab-jamun",
+      "name": "Dry Gulab Jamun",
+      "transliteration": "Local Fresh Sweet (2 Pieces)",
+      "category": "specials",
+      "badge": "Local Special",
+      "image": "images/hero.jpg",
+      "description": "Melt-in-your-mouth soft dry gulab jamun soaked in fragrant cardamom syrup. (Available locally near Madanapalle)",
+      "healthBenefit": "Freshly made daily in small batches with pure milk solids.",
+      "prices": {
+        "Pack of 2 pcs": 20
+      }
+    },
+    {
+      "id": "custom-millet-order",
+      "name": "Custom Millet Sweets & Snacks",
+      "transliteration": "Foxtail, Kodo, Barnyard & Little Millet Specials",
+      "category": "specials",
+      "badge": "Made to Order",
+      "image": "images/sweets.jpg",
+      "description": "We prepare customized traditional sweets, laddus, and savory snacks using organic Millets tailored to your taste & dietary preference.",
+      "healthBenefit": "Gluten-free, diabetic-friendly, and packed with ancient grain nutrition.",
+      "prices": {
+        "Custom Quote": 0
+      }
+    },
+    {
+      "id": "kaju-katli-special-839",
+      "name": "Kaju Katli Special",
+      "transliteration": "Cashew Nut Bar",
+      "category": "sweets",
+      "badge": "Festive Favorite",
+      "image": "images/podis.jpg",
+      "description": "Pure silver foil coated cashew sweet made with cow ghee.",
+      "healthBenefit": "Rich in healthy energy.",
+      "prices": {
+        "250g": 375,
+        "500g": 750,
+        "1kg": 1500
+      }
+    }
+  ],
+  "orders": [
+    {
+      "id": 2,
+      "order_number": "SKD-2026-7676",
+      "customer_name": "Niranjan Kumar K",
+      "customer_phone": "qqq",
+      "customer_address": "Chembakur",
+      "customer_city": "Madanapalle",
+      "items": [
+        {
+          "name": "Ragi Laddu",
+          "weight": "100g",
+          "price": 100,
+          "qty": 1,
+          "itemTotal": 100
+        }
+      ],
+      "total_amount": 100,
+      "order_status": "Pending",
+      "payment_status": "Unpaid",
+      "customer_notes": "",
+      "created_at": "2026-09-10 18:04:32"
+    },
+    {
+      "id": 1,
+      "order_number": "SKD-2026-4433",
+      "customer_name": "Brahmin Foodie",
+      "customer_phone": "9490068924",
+      "customer_address": "Main Street, Madanapalle",
+      "customer_city": "Madanapalle",
+      "items": [
+        {
+          "name": "Munaga Podi",
+          "weight": "500g",
+          "price": 600,
+          "qty": 2,
+          "itemTotal": 1200
+        },
+        {
+          "name": "Sunnundalu",
+          "weight": "250g",
+          "price": 320,
+          "qty": 1,
+          "itemTotal": 320
+        }
+      ],
+      "total_amount": 1520,
+      "order_status": "Pending",
+      "payment_status": "Unpaid",
+      "customer_notes": "",
+      "created_at": "2026-09-10 18:03:24"
+    }
+  ],
+  "admin_pin": "1234"
+}

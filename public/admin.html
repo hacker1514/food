@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Skanda Home Foods | Executive Management Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            50: '#FDF2F4',
+                            100: '#FCE4E8',
+                            600: '#8C1D34',
+                            700: '#75172A',
+                            800: '#5C101F',
+                            900: '#420813',
+                            950: '#24040B',
+                        },
+                        gold: {
+                            100: '#FFF9E6',
+                            300: '#F4D068',
+                            400: '#E2BF42',
+                            500: '#D4AF37',
+                            600: '#B89220',
+                            700: '#997613',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Poppins', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .site-footer {
+            background-color: #24040B !important;
+            color: #FEF3C7 !important;
+            border-top: 4px solid #D4AF37 !important;
+        }
+        @media print {
+            body * { visibility: hidden; }
+            #printable-invoice-modal, #printable-invoice-modal * { visibility: visible; }
+            #printable-invoice-modal { position: absolute; left: 0; top: 0; width: 100%; background: white !important; color: black !important; box-shadow: none !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-gray-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- PIN Authentication Overlay Modal -->
+    <div id="login-modal" class="fixed inset-0 z-50 bg-maroon-950/95 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-3xl p-8 shadow-2xl border-2 border-gold-500 text-center space-y-6">
+            <div class="w-20 h-20 mx-auto rounded-full bg-maroon-900 p-1 border-2 border-gold-500 shadow-md">
+                <img src="images/logo.jpg" alt="Logo" class="w-full h-full object-contain rounded-full">
+            </div>
+            <div>
+                <h2 class="text-2xl font-black font-serif text-maroon-900">Sri Skanda Management Portal</h2>
+                <p class="text-xs text-amber-800 font-bold tracking-wider mt-1 uppercase">Enter Security Passcode to Access Portal</p>
+            </div>
+
+            <form id="pin-login-form" class="space-y-4">
+                <div>
+                    <input 
+                        type="password" 
+                        id="admin-pin-input" 
+                        placeholder="Enter Admin Passcode" 
+                        maxlength="6" 
+                        class="w-full text-center text-2xl font-bold tracking-widest py-3 px-4 bg-white text-black placeholder:text-gray-400 border-2 border-amber-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-inner"
+                        required
+                    >
+                </div>
+                <button type="submit" class="w-full bg-maroon-800 hover:bg-maroon-900 text-amber-100 py-3 rounded-xl font-bold text-sm shadow-lg transition flex items-center justify-center gap-2">
+                    <i class="fas fa-lock-open"></i> Unlock Executive Portal
+                </button>
+                <p id="login-error" class="text-xs font-bold text-red-600 hidden">Invalid Passcode. Access denied!</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Container -->
+    <div id="dashboard-container" class="hidden flex-1 flex flex-col">
+        
+        <!-- Header Nav -->
+        <header class="bg-maroon-900 text-white border-b-4 border-gold-500 sticky top-0 z-40 shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+                
+                <div class="flex items-center gap-3">
+                    <img src="images/logo.jpg" alt="Sri Skanda Home Foods" class="h-10 w-10 rounded-full border border-gold-500">
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold font-serif text-amber-200">Sri Skanda Executive Management</h1>
+                        <p class="text-[10px] text-amber-400 font-semibold tracking-widest uppercase">Live Orders & Store Inventory Manager</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <a href="index.html" target="_blank" class="hidden sm:flex items-center gap-1.5 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                        <i class="fas fa-store"></i> View Customer Website
+                    </a>
+                    <button onclick="openChangePinModal()" class="bg-amber-400 hover:bg-amber-500 text-maroon-950 px-3.5 py-1.5 rounded-lg text-xs font-black transition shadow-md flex items-center gap-1.5 border-2 border-amber-300 transform active:scale-95">
+                        <i class="fas fa-key text-maroon-950"></i> <span class="text-maroon-950 font-black">Change Passcode</span>
+                    </button>
+                    <button onclick="logoutAdmin()" class="bg-red-700 hover:bg-red-800 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow flex items-center gap-1">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- Navigation Tabs Bar -->
+        <div class="bg-amber-100/90 border-b border-amber-300 shadow-inner">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-2 pt-2">
+                <button id="tab-orders-btn" onclick="switchTab('orders')" class="admin-tab px-5 py-2.5 rounded-t-xl font-bold text-xs transition border-t-2 border-x border-amber-300 bg-white text-maroon-900 shadow-sm flex items-center gap-2">
+                    <i class="fas fa-box-archive text-amber-700"></i> Customer Orders Management
+                </button>
+                <button id="tab-menu-btn" onclick="switchTab('menu')" class="admin-tab px-5 py-2.5 rounded-t-xl font-bold text-xs transition border-t-2 border-x border-amber-300/50 bg-amber-200/50 text-gray-700 hover:bg-white flex items-center gap-2">
+                    <i class="fas fa-utensils text-amber-700"></i> Store Menu & Weight Pricing Manager
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-8">
+            
+            <!-- SECTION 1: ORDERS MANAGEMENT TAB -->
+            <div id="section-orders" class="space-y-6">
+                
+                <!-- KPI Analytics Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Sales Revenue</p>
+                            <h3 id="stat-revenue" class="text-2xl sm:text-3xl font-black text-maroon-900 mt-1">₹0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-indian-rupee-sign"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Orders</p>
+                            <h3 id="stat-total-orders" class="text-2xl sm:text-3xl font-black text-gray-900 mt-1">0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-boxes-stack"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Pending Processing</p>
+                            <h3 id="stat-pending-orders" class="text-2xl sm:text-3xl font-black text-amber-600 mt-1">0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Delivered Orders</p>
+                            <h3 id="stat-delivered-orders" class="text-2xl sm:text-3xl font-black text-green-700 mt-1">0</h3>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-green-100 text-green-800 flex items-center justify-center text-xl font-bold">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Filters & Controls Bar -->
+                <div class="bg-white p-4 rounded-2xl shadow-md border border-amber-200 flex flex-wrap items-center justify-between gap-4">
+                    
+                    <!-- Search -->
+                    <div class="relative flex-1 min-w-[240px]">
+                        <input 
+                            type="text" 
+                            id="admin-search" 
+                            placeholder="Search by Order ID, Name, Phone, City..." 
+                            class="w-full pl-10 pr-4 py-2 bg-amber-50/50 border border-amber-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-maroon-700"
+                        >
+                        <i class="fas fa-search absolute left-3.5 top-3 text-amber-700 text-xs"></i>
+                    </div>
+
+                    <!-- Status Filter Tabs -->
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <select id="status-filter-select" class="p-2 bg-amber-50 border border-amber-300 rounded-xl text-xs font-bold text-maroon-900 focus:ring-2 focus:ring-maroon-700">
+                            <option value="all">Filter: All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Preparing">Preparing</option>
+                            <option value="Packed">Packed</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+
+                        <button onclick="fetchOrders()" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fas fa-rotate"></i> Refresh
+                        </button>
+
+                        <button onclick="exportCSV()" class="bg-green-700 hover:bg-green-800 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5">
+                            <i class="fas fa-file-csv"></i> Export Sales CSV
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- Orders Table Section -->
+                <div class="bg-white rounded-2xl shadow-md border border-amber-200 overflow-hidden">
+                    <div class="p-4 bg-maroon-900 text-white flex items-center justify-between border-b border-gold-500">
+                        <h3 class="font-bold text-sm font-serif text-amber-200 flex items-center gap-2">
+                            <i class="fas fa-list-check text-gold-400"></i> Customer Orders Registry
+                        </h3>
+                        <span id="order-count-tag" class="text-xs bg-gold-500 text-maroon-950 font-black px-2.5 py-0.5 rounded-full">0 Orders</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-amber-100/80 text-maroon-950 font-bold uppercase tracking-wider border-b border-amber-200">
+                                <tr>
+                                    <th class="p-4">Order ID & Date</th>
+                                    <th class="p-4">Customer Contact & Address</th>
+                                    <th class="p-4">Items Ordered</th>
+                                    <th class="p-4 text-right">Total Amount</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4 text-center">Actions & WhatsApp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-tbody" class="divide-y divide-amber-100">
+                                <tr>
+                                    <td colspan="6" class="text-center py-12 text-gray-500">No customer orders yet. Placed orders will appear here!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SECTION 2: STORE MENU & INVENTORY MANAGER TAB -->
+            <div id="section-menu" class="hidden space-y-6">
+                
+                <div class="bg-white p-6 rounded-2xl shadow-md border border-amber-200 flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold font-serif text-maroon-900">Manage Website Menu & Weight Prices</h3>
+                        <p class="text-xs text-gray-600">Add new food items or update prices for 100g, 250g, 500g, and 1kg options. Changes update the customer website instantly!</p>
+                    </div>
+
+                    <button onclick="openAddItemModal()" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-maroon-950 font-black px-5 py-2.5 rounded-xl text-xs shadow-md transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fas fa-plus-circle text-sm"></i> Add New Food Item
+                    </button>
+                </div>
+
+                <!-- Menu Items Table -->
+                <div class="bg-white rounded-2xl shadow-md border border-amber-200 overflow-hidden">
+                    <div class="p-4 bg-maroon-900 text-white flex items-center justify-between border-b border-gold-500">
+                        <h3 class="font-bold text-sm font-serif text-amber-200 flex items-center gap-2">
+                            <i class="fas fa-utensils text-gold-400"></i> Store Products & Pricing Catalog
+                        </h3>
+                        <span id="menu-count-tag" class="text-xs bg-gold-500 text-maroon-950 font-black px-2.5 py-0.5 rounded-full">0 Items</span>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-amber-100/80 text-maroon-950 font-bold uppercase tracking-wider border-b border-amber-200">
+                                <tr>
+                                    <th class="p-4">Item & Photo</th>
+                                    <th class="p-4">Category & Badge</th>
+                                    <th class="p-4">Weight Pricing (100g / 250g / 500g / 1kg)</th>
+                                    <th class="p-4">Description & Health Benefit</th>
+                                    <th class="p-4 text-center">Manage Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-menu-tbody" class="divide-y divide-amber-100">
+                                <tr>
+                                    <td colspan="5" class="text-center py-12 text-gray-500">Loading store menu items...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Modal: Add/Edit Menu Item -->
+        <div id="item-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white max-w-xl w-full rounded-2xl p-6 shadow-2xl space-y-4 border-2 border-gold-500 max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center border-b border-amber-200 pb-3">
+                    <h3 id="item-modal-title" class="font-bold text-base font-serif text-maroon-900">Add New Store Food Item</h3>
+                    <button onclick="closeItemModal()" class="text-gray-400 hover:text-gray-700 text-lg"><i class="fas fa-times"></i></button>
+                </div>
+
+                <form id="item-form" class="space-y-4 text-xs">
+                    <input type="hidden" id="edit-item-id">
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Item Name (English) *</label>
+                            <input type="text" id="item-name" placeholder="e.g. Kaju Katli" required class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Sub-label / Transliteration</label>
+                            <input type="text" id="item-transliteration" placeholder="e.g. Cashew Sweet Bar" class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3">
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Category *</label>
+                            <select id="item-category" class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg font-semibold">
+                                <option value="podis">Traditional Podis</option>
+                                <option value="sweets">Traditional Sweets</option>
+                                <option value="specials">Specials & Millets</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Badge Tag</label>
+                            <input type="text" id="item-badge" placeholder="e.g. Fresh Batch / Premium" class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-gray-700 mb-1">Image Path / URL</label>
+                            <input type="text" id="item-image" placeholder="images/sweets.jpg" class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg">
+                        </div>
+                    </div>
+
+                    <!-- Weight Pricing Grid -->
+                    <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+                        <label class="block font-bold text-maroon-900 uppercase">Set Prices per Weight Tier (₹):</label>
+                        <div class="grid grid-cols-4 gap-2">
+                            <div>
+                                <span class="block text-[11px] text-gray-600 font-semibold">100 grams</span>
+                                <input type="number" id="price-100g" placeholder="₹" class="w-full p-1.5 border border-amber-300 rounded text-xs font-bold">
+                            </div>
+                            <div>
+                                <span class="block text-[11px] text-gray-600 font-semibold">250 grams</span>
+                                <input type="number" id="price-250g" placeholder="₹" class="w-full p-1.5 border border-amber-300 rounded text-xs font-bold">
+                            </div>
+                            <div>
+                                <span class="block text-[11px] text-gray-600 font-semibold">500 grams</span>
+                                <input type="number" id="price-500g" placeholder="₹" class="w-full p-1.5 border border-amber-300 rounded text-xs font-bold">
+                            </div>
+                            <div>
+                                <span class="block text-[11px] text-gray-600 font-semibold">1 kilogram</span>
+                                <input type="number" id="price-1kg" placeholder="₹" class="w-full p-1.5 border border-amber-300 rounded text-xs font-bold">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Item Description</label>
+                        <textarea id="item-description" rows="2" placeholder="Brief description of roasted ingredients and preparation..." class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-gray-700 mb-1">Health Benefit Note</label>
+                        <input type="text" id="item-health" placeholder="e.g. Rich in protein & healthy fats." class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg">
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-2 border-t border-amber-200">
+                        <button type="button" onclick="closeItemModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-xl font-bold transition">Cancel</button>
+                        <button type="submit" class="px-5 py-2 bg-maroon-800 hover:bg-maroon-900 text-amber-100 rounded-xl font-bold transition shadow">Save Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Printable Invoice & Packing Slip Modal -->
+        <div id="printable-invoice-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white max-w-2xl w-full rounded-2xl p-6 shadow-2xl space-y-4 border-2 border-gold-500 max-h-[90vh] overflow-y-auto">
+                
+                <div class="flex justify-between items-start border-b border-amber-200 pb-4">
+                    <div class="flex items-center gap-3">
+                        <img src="images/logo.jpg" alt="Logo" class="h-12 w-12 rounded-full border border-gold-500">
+                        <div>
+                            <h2 class="text-xl font-bold font-serif text-maroon-900">Sri Skanda Home Foods</h2>
+                            <p class="text-[10px] text-amber-800 font-bold tracking-wider uppercase">PURE • AUTHENTIC • BRAHMIN FOODS</p>
+                            <p class="text-[11px] text-gray-600">WhatsApp / Phone: +91 94900 68924</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs font-bold text-gray-500 uppercase">Packing Slip & Invoice</span>
+                        <h3 id="invoice-order-num" class="text-lg font-black text-maroon-900">SKD-2026-XXXX</h3>
+                        <p id="invoice-date" class="text-xs text-gray-500">Date: --</p>
+                    </div>
+                </div>
+
+                <!-- Customer Address Box -->
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-xs grid grid-cols-2 gap-4">
+                    <div>
+                        <strong class="text-maroon-900 block mb-1">SHIP TO CUSTOMER:</strong>
+                        <p id="invoice-cust-name" class="font-bold text-gray-900">Customer Name</p>
+                        <p id="invoice-cust-phone" class="text-gray-700">Phone: --</p>
+                        <p id="invoice-cust-address" class="text-gray-700 mt-1">Street Address</p>
+                        <p id="invoice-cust-city" class="text-gray-700 font-semibold">City & Zip</p>
+                    </div>
+                    <div class="border-l border-amber-200 pl-4">
+                        <strong class="text-maroon-900 block mb-1">ORDER STATUS:</strong>
+                        <p>Status: <span id="invoice-status-badge" class="font-bold text-amber-800">Pending</span></p>
+                        <p>Payment: <span id="invoice-payment-badge" class="font-bold text-gray-800">Unpaid</span></p>
+                        <p class="mt-2 text-[11px] text-gray-600 italic" id="invoice-notes"></p>
+                    </div>
+                </div>
+
+                <!-- Items Table -->
+                <table class="w-full text-xs text-left border-collapse border border-gray-200">
+                    <thead class="bg-amber-100 text-maroon-900 font-bold border-b border-gray-200">
+                        <tr>
+                            <th class="p-2 border-r border-gray-200">#</th>
+                            <th class="p-2 border-r border-gray-200">Item Name</th>
+                            <th class="p-2 border-r border-gray-200">Pack Weight</th>
+                            <th class="p-2 border-r border-gray-200 text-center">Qty</th>
+                            <th class="p-2 border-r border-gray-200 text-right">Price</th>
+                            <th class="p-2 text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice-items-tbody"></tbody>
+                    <tfoot class="font-bold bg-amber-50">
+                        <tr>
+                            <td colspan="5" class="p-2 text-right border-t border-gray-200">GRAND TOTAL AMOUNT:</td>
+                            <td id="invoice-grand-total" class="p-2 text-right text-sm text-maroon-900 border-t border-gray-200">₹0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="text-[11px] text-gray-500 text-center pt-2 border-t border-amber-100">
+                    Thank you for ordering with <strong>Sri Skanda Home Foods</strong>. Homemade with Tradition & Love!
+                </div>
+
+                <!-- Modal Actions (No Print) -->
+                <div class="flex justify-end gap-3 pt-2 no-print">
+                    <button onclick="window.print()" class="bg-maroon-800 hover:bg-maroon-900 text-amber-100 px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                        <i class="fas fa-print"></i> Print Packing Slip
+                    </button>
+                    <button onclick="closeInvoiceModal()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-xl text-xs font-bold transition">
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="site-footer bg-maroon-950 text-amber-100 border-t-4 border-gold-500 py-6 text-center text-xs space-y-2">
+            <p>© 2026 Sri Skanda Home Foods Executive Management Portal. All Rights Reserved.</p>
+            <p class="text-[10px] text-amber-300/70 tracking-widest uppercase font-medium">Developed by <span class="font-bold text-amber-200">Niranjan Kumar K</span></p>
+        </footer>
+
+    <!-- Brand Custom Confirmation & Alert Dialog Box Modal -->
+    <div id="custom-confirm-modal" class="fixed inset-0 z-50 bg-black/75 hidden backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-gold-500 space-y-4 text-center">
+            <div class="w-16 h-16 mx-auto rounded-full bg-maroon-900 p-0.5 border-2 border-gold-500 shadow-md flex items-center justify-center text-amber-300 text-2xl">
+                <i id="confirm-modal-icon" class="fas fa-exclamation-triangle"></i>
+            </div>
+            
+            <div class="space-y-1">
+                <h3 id="confirm-modal-title" class="text-xl font-bold font-serif text-maroon-900">Confirm Action</h3>
+                <p id="confirm-modal-text" class="text-xs text-gray-600 leading-relaxed px-2">Are you sure you want to proceed?</p>
+            </div>
+
+            <div class="pt-2 flex items-center justify-center gap-3">
+                <button id="confirm-modal-cancel-btn" onclick="closeConfirmModal(false)" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2.5 rounded-xl text-xs transition">
+                    Cancel
+                </button>
+                <button id="confirm-modal-ok-btn" onclick="closeConfirmModal(true)" class="flex-1 bg-maroon-800 hover:bg-maroon-900 text-amber-100 font-bold py-2.5 rounded-xl text-xs shadow-md transition border border-gold-500">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Admin Passcode Modal -->
+    <div id="change-pin-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-gold-500 space-y-4">
+            <div class="flex justify-between items-center border-b border-amber-200 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-maroon-950 text-base font-bold shadow">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base font-serif text-maroon-900">Change Admin Passcode</h3>
+                        <p class="text-[11px] text-amber-800 font-bold uppercase">Update portal security PIN</p>
+                    </div>
+                </div>
+                <button onclick="closeChangePinModal()" class="text-gray-400 hover:text-gray-700 text-lg"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="change-pin-form" onsubmit="handleChangePinSubmit(event)" class="space-y-3.5 text-xs">
+                <div>
+                    <label class="block font-bold text-gray-900 mb-1">Current Passcode</label>
+                    <input 
+                        type="password" 
+                        id="current-pin-input" 
+                        placeholder="Enter current passcode" 
+                        class="w-full px-3.5 py-2.5 bg-white text-black placeholder:text-gray-400 border border-amber-300 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-inner" 
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-900 mb-1">New Passcode</label>
+                    <input 
+                        type="password" 
+                        id="new-pin-input" 
+                        placeholder="Enter new passcode (min 4 chars)" 
+                        class="w-full px-3.5 py-2.5 bg-white text-black placeholder:text-gray-400 border border-amber-300 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-inner" 
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-900 mb-1">Confirm New Passcode</label>
+                    <input 
+                        type="password" 
+                        id="confirm-pin-input" 
+                        placeholder="Re-enter new passcode" 
+                        class="w-full px-3.5 py-2.5 bg-white text-black placeholder:text-gray-400 border border-amber-300 rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-inner" 
+                        required
+                    >
+                </div>
+
+                <div class="pt-2 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeChangePinModal()" class="px-4 py-2.5 bg-amber-100 hover:bg-amber-200 text-maroon-900 font-bold rounded-xl transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 gold-gradient text-maroon-950 font-black rounded-xl shadow-md transition border border-gold-500">
+                        Update Passcode
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Include Admin JS -->
+    <script src="admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- PWA Manifest & Mobile App Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#75172A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sri Skanda">
+    <link rel="apple-touch-icon" href="images/logo.jpg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            50: '#FDF2F4',
+                            100: '#FCE4E8',
+                            600: '#8C1D34',
+                            700: '#75172A',
+                            800: '#5C101F',
+                            900: '#420813',
+                            950: '#24040B',
+                        },
+                        gold: {
+                            100: '#FFF9E6',
+                            300: '#F4D068',
+                            400: '#E2BF42',
+                            500: '#D4AF37',
+                            600: '#B89220',
+                            700: '#997613',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Poppins', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D068 50%, #B89220 100%);
+        }
+        .maroon-gradient {
+            background: linear-gradient(135deg, #75172A 0%, #420813 100%);
+        }
+        .site-footer {
+            background-color: #24040B !important;
+            color: #FEF3C7 !important;
+            border-top: 4px solid #D4AF37 !important;
+        }
+        .site-footer h4 {
+            color: #F4D068 !important;
+        }
+        .site-footer p, .site-footer li, .site-footer span {
+            color: #FCE4E8 !important;
+        }
+    </style>
+</head>
+<body class="bg-amber-50/40 text-gray-800 font-sans antialiased selection:bg-amber-200 selection:text-maroon-900">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-maroon-900 text-amber-200 text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-4 border-b border-amber-500/30">
+        <span><i class="fas fa-truck text-amber-400 mr-1"></i> <strong>SHIPPING ALL OVER INDIA</strong> — Safe Packaging & Fast Delivery</span>
+        <span class="hidden md:inline">•</span>
+        <span class="hidden md:inline"><i class="fab fa-whatsapp text-green-400 mr-1"></i> Order Direct: <strong>+91 94900 68924</strong></span>
+    </div>
+
+    <!-- Sticky Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-amber-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Logo & Brand Name -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="images/logo.jpg" alt="Sri Skanda Home Foods Logo" class="h-14 w-14 object-contain rounded-full border-2 border-gold-500 p-0.5 shadow-sm group-hover:scale-105 transition-transform">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black text-maroon-900 tracking-tight font-serif flex items-center gap-1.5">
+                        Sri Skanda <span class="text-xs font-sans font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full border border-amber-300">HOME FOODS</span>
+                    </h1>
+                    <p class="text-xs text-amber-800 font-semibold tracking-wider uppercase">PURE • AUTHENTIC • BRAHMIN FOODS</p>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop & Mobile) -->
+            <div class="flex-1 max-w-md hidden md:block">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search Munaga Podi, Sunnundalu, Rasam Powder..." 
+                        class="w-full pl-10 pr-4 py-2 bg-amber-50/60 border border-amber-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-maroon-700 focus:bg-white transition"
+                    >
+                    <i class="fas fa-search absolute left-3.5 top-2.5 text-amber-700 text-sm"></i>
+                </div>
+            </div>
+
+            <!-- Actions, Language Selector, Install App & Cart Button -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-amber-100 border border-amber-300 text-maroon-900 font-bold text-xs px-2.5 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-sm cursor-pointer" title="Select Language">
+                    <option value="en">🌐 EN</option>
+                    <option value="te">🇮🇳 తెలుగు (TE)</option>
+                    <option value="hi">🇮🇳 हिंदी (HI)</option>
+                    <option value="ta">🇮🇳 தமிழ் (TA)</option>
+                </select>
+
+                <button id="header-install-app-btn" onclick="triggerPwaInstall()" class="flex items-center gap-2 gold-gradient hover:opacity-95 text-maroon-950 px-3.5 py-2 rounded-full text-xs font-black transition shadow-sm border border-gold-500 transform active:scale-95" title="Install Sri Skanda Web App">
+                    <img src="images/logo.jpg" alt="Sri Skanda Logo" class="w-4 h-4 rounded-full border border-maroon-900 object-cover">
+                    <span data-i18n="install_app">Install App</span>
+                </button>
+
+                <a href="https://wa.me/919490068924" target="_blank" class="hidden sm:flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3.5 py-2 rounded-full text-xs font-bold transition shadow-sm">
+                    <i class="fab fa-whatsapp text-sm"></i> <span data-i18n="whatsapp_us">WhatsApp Us</span>
+                </a>
+
+                <button id="open-my-orders-btn" onclick="openMyOrdersModal()" class="relative bg-amber-100 hover:bg-amber-200 text-maroon-900 border border-amber-300 px-3 py-2 rounded-full text-xs sm:text-sm font-bold flex items-center gap-1.5 transition shadow-sm transform active:scale-95">
+                    <i class="fas fa-receipt text-maroon-700"></i>
+                    <span data-i18n="my_orders">My Orders</span>
+                    <span id="my-orders-badge" class="hidden bg-maroon-800 text-gold-400 font-bold text-xs px-2 py-0.5 rounded-full shadow-inner">0</span>
+                </button>
+
+                <button id="open-cart-btn" class="relative bg-maroon-800 hover:bg-maroon-900 text-white px-4 py-2 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2 shadow-md transition transform active:scale-95">
+                    <i class="fas fa-shopping-bag text-amber-300"></i>
+                    <span data-i18n="cart">Cart</span>
+                    <span class="cart-count-badge hidden bg-gold-500 text-maroon-900 font-black text-xs px-2 py-0.5 rounded-full shadow-inner">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search & My Orders Bar -->
+        <div class="px-4 pb-3 md:hidden flex items-center gap-2">
+            <div class="relative flex-1">
+                <input 
+                    type="text" 
+                    id="search-input-mobile" 
+                    placeholder="Search Podis & Sweets..." 
+                    class="w-full pl-9 pr-3 py-1.5 bg-amber-50/60 border border-amber-300 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-maroon-700"
+                    oninput="document.getElementById('search-input').value = this.value; document.getElementById('search-input').dispatchEvent(new Event('input'));"
+                >
+                <i class="fas fa-search absolute left-3 top-2 text-amber-700 text-xs"></i>
+            </div>
+
+            <button onclick="openMyOrdersModal()" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 border border-amber-300 px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 transition shadow-sm flex-shrink-0 active:scale-95">
+                <i class="fas fa-receipt text-maroon-700"></i>
+                <span>My Orders</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-maroon-900 text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('images/hero.jpg');"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 grid md:grid-cols-12 gap-8 items-center">
+            
+            <div class="md:col-span-7 space-y-5 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-400/40 text-amber-200 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">
+                    <i class="fas fa-certificate text-gold-400"></i> Traditional Heritage Recipes
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-serif leading-tight text-amber-100">
+                    Handmade Brahmin Food <br class="hidden sm:inline">Made with Pure Tradition & Love
+                </h2>
+                <p class="text-amber-200/90 text-sm sm:text-base max-w-2xl leading-relaxed">
+                    Authentic South Indian Podis (Spiced Powders), Pure Ghee Laddus, Crunchy Chikkis, and Healthy Millet Sweets prepared fresh in small batches without artificial preservatives.
+                </p>
+
+                <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#menu-section" class="gold-gradient text-maroon-900 px-6 py-3 rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fas fa-utensils"></i> View Full Menu & Order
+                    </a>
+                    <a href="https://wa.me/919490068924?text=Hi%20Sri%20Skanda%20Home%20Foods,%20I%20would%20like%20to%20inquire%20about%20your%20products." target="_blank" class="bg-white/10 hover:bg-white/20 text-amber-100 border border-amber-300/40 px-6 py-3 rounded-xl font-bold text-sm transition backdrop-blur-sm flex items-center gap-2">
+                        <i class="fab fa-whatsapp text-green-400 text-lg"></i> Instant WhatsApp Order
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md bg-white/10 p-3 rounded-3xl border border-amber-300/30 backdrop-blur-md shadow-2xl">
+                    <img src="images/hero.jpg" alt="Authentic South Indian Brahmin Delicacies" class="w-full h-72 object-cover rounded-2xl shadow-md cursor-pointer hover:opacity-95 transition" onclick="openImageModal('images/hero.jpg', 'Authentic South Indian Brahmin Delicacies')">
+                    <div class="absolute bottom-6 left-6 right-6 bg-black/70 backdrop-blur-md text-amber-100 p-3 rounded-xl text-xs flex items-center justify-between border border-amber-400/30">
+                        <div>
+                            <p class="font-bold text-white">Traditional Brass & Banana Leaf Thali</p>
+                            <p class="text-[11px] text-amber-200">Fresh Podis & Sweets Assortment</p>
+                        </div>
+                        <span class="bg-amber-500 text-maroon-950 font-extrabold px-2.5 py-1 rounded text-[11px]">100% Pure</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Quality Trust Badges Section -->
+    <section class="bg-amber-100/70 border-y border-amber-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            
+            <div class="flex flex-col items-center gap-2 p-2">
+                <div class="w-12 h-12 rounded-full bg-maroon-800 text-amber-300 flex items-center justify-center text-xl shadow-sm">
+                    <i class="fas fa-heart font-bold"></i>
+                </div>
+                <h4 class="font-bold text-sm text-maroon-900">Homemade Care</h4>
+                <p class="text-xs text-gray-600">Prepared with traditional recipes & love</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-2 p-2">
+                <div class="w-12 h-12 rounded-full bg-maroon-800 text-amber-300 flex items-center justify-center text-xl shadow-sm">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <h4 class="font-bold text-sm text-maroon-900">No Preservatives</h4>
+                <p class="text-xs text-gray-600">Zero artificial additives or colors</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-2 p-2">
+                <div class="w-12 h-12 rounded-full bg-maroon-800 text-amber-300 flex items-center justify-center text-xl shadow-sm">
+                    <i class="fas fa-mortar-pestle"></i>
+                </div>
+                <h4 class="font-bold text-sm text-maroon-900">Fresh Small Batches</h4>
+                <p class="text-xs text-gray-600">Roasted & ground upon demand</p>
+            </div>
+
+            <div class="flex flex-col items-center gap-2 p-2">
+                <div class="w-12 h-12 rounded-full bg-maroon-800 text-amber-300 flex items-center justify-center text-xl shadow-sm">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h4 class="font-bold text-sm text-maroon-900">All India Shipping</h4>
+                <p class="text-xs text-gray-600">Hygienic moisture-proof packaging</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Local Special Alert Banner -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-maroon-950 p-4 rounded-2xl shadow-md flex flex-wrap items-center justify-between gap-4 border border-amber-400">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-maroon-900 text-amber-300 flex items-center justify-center text-lg font-bold">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div>
+                    <h4 class="font-extrabold text-sm sm:text-base">SWEET SPECIAL: Dry Gulab Jamun (2 Pieces) — Only ₹20!</h4>
+                    <p class="text-xs font-semibold text-maroon-900/90">Freshly made soft jamuns soaked in cardamom syrup (Local Delivery Available Near Madanapalle Only)</p>
+                </div>
+            </div>
+            <a href="https://wa.me/919490068924?text=Hi,%20I%20want%20to%20order%20Dry%20Gulab%20Jamun%20in%20Madanapalle%20local%20area." target="_blank" class="bg-maroon-900 hover:bg-maroon-950 text-amber-100 px-4 py-2 rounded-xl text-xs font-bold transition shadow">
+                Order Local Special <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Menu Section -->
+    <section id="menu-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="text-center max-w-3xl mx-auto mb-8 space-y-2">
+            <h3 class="text-3xl font-extrabold text-maroon-900 font-serif">Explore Our Authentic Menu</h3>
+            <p class="text-gray-600 text-sm">Select your preferred package weight (100g, 250g, 500g, or 1kg) and add directly to your cart for WhatsApp order.</p>
+        </div>
+
+        <!-- Category Tabs Filter -->
+        <div class="flex justify-center flex-wrap gap-2 mb-8">
+            <button data-category="all" class="category-tab active px-5 py-2.5 rounded-full text-xs font-bold transition shadow-sm bg-maroon-700 text-white">
+                <i class="fas fa-th-large mr-1.5"></i> All Items
+            </button>
+            <button data-category="podis" class="category-tab px-5 py-2.5 rounded-full text-xs font-bold transition shadow-sm bg-amber-100 text-maroon-900 hover:bg-amber-200">
+                <i class="fas fa-pepper-hot mr-1.5 text-amber-700"></i> Traditional Podis (Powders)
+            </button>
+            <button data-category="sweets" class="category-tab px-5 py-2.5 rounded-full text-xs font-bold transition shadow-sm bg-amber-100 text-maroon-900 hover:bg-amber-200">
+                <i class="fas fa-cookie-bite mr-1.5 text-amber-700"></i> Traditional Sweets & Chikkis
+            </button>
+            <button data-category="specials" class="category-tab px-5 py-2.5 rounded-full text-xs font-bold transition shadow-sm bg-amber-100 text-maroon-900 hover:bg-amber-200">
+                <i class="fas fa-seedling mr-1.5 text-amber-700"></i> Specials & Millets
+            </button>
+        </div>
+
+        <!-- Menu Container (Rendered dynamically via app.js) -->
+        <div id="menu-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Loading Skeleton -->
+            <div class="animate-pulse bg-white p-6 rounded-2xl border border-amber-200 h-80"></div>
+            <div class="animate-pulse bg-white p-6 rounded-2xl border border-amber-200 h-80"></div>
+            <div class="animate-pulse bg-white p-6 rounded-2xl border border-amber-200 h-80"></div>
+        </div>
+
+    </section>
+
+    <!-- Custom Millet Sweets & Snacks Request Form Section -->
+    <section id="custom-millet-section" class="bg-gradient-to-br from-amber-100 to-amber-200/60 border-y border-amber-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-12 gap-8 items-center">
+            
+            <div class="md:col-span-6 space-y-4">
+                <span class="bg-maroon-800 text-amber-200 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Customized Orders</span>
+                <h3 class="text-3xl font-bold font-serif text-maroon-900">Need Special Millet Sweets or Custom Snacks?</h3>
+                <p class="text-gray-700 text-sm leading-relaxed">
+                    We prepare personalized sweets & savories using healthy organic Millets (Foxtail, Kodo, Barnyard, Little Millet, Finger Millet) based on your family dietary requirements, diabetic friendly recipes, or festival orders.
+                </p>
+                <ul class="space-y-2 text-xs font-semibold text-maroon-950">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-700"></i> Made fresh to order with pure cow ghee & organic jaggery</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-700"></i> Custom weight batches (500g, 1kg, 5kg+ for events)</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle text-green-700"></i> Safe moisture-locked nationwide packing</li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-6">
+                <form id="millet-custom-form" class="bg-white p-6 rounded-2xl shadow-xl border border-amber-300 space-y-4">
+                    <h4 class="font-bold text-lg text-maroon-900 border-b border-amber-100 pb-2">Request Custom Millet Preparation</h4>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Select Millet / Sweet Preference</label>
+                        <select id="millet-type" class="w-full p-2.5 bg-amber-50/50 border border-amber-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-maroon-700">
+                            <option value="Ragi (Finger Millet) Laddus">Ragi (Finger Millet) Laddus</option>
+                            <option value="Foxtail Millet Sweets / Snacks">Foxtail Millet Sweets / Snacks</option>
+                            <option value="Kodo Millet Savory Mixture">Kodo Millet Savory Mixture</option>
+                            <option value="Little Millet / Barnyard Delicacies">Little Millet / Barnyard Delicacies</option>
+                            <option value="Sugar-Free Jaggery Millet Blend">Sugar-Free Jaggery Millet Blend</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Required Quantity</label>
+                            <select id="millet-qty" class="w-full p-2.5 bg-amber-50/50 border border-amber-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-maroon-700">
+                                <option value="500 grams">500 grams</option>
+                                <option value="1 kilogram">1 kilogram</option>
+                                <option value="2 kilograms">2 kilograms</option>
+                                <option value="5+ kilograms (Bulk Event)">5+ kilograms (Bulk)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Sweetener Choice</label>
+                            <select id="millet-sweetener" class="w-full p-2.5 bg-amber-50/50 border border-amber-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-maroon-700">
+                                <option value="Organic Jaggery">Organic Jaggery</option>
+                                <option value="Dates & Nuts (Sugar-Free)">Dates & Nuts (Sugar-Free)</option>
+                                <option value="Traditional Country Sugar">Country Sugar</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">Special Preferences / Message</label>
+                        <textarea id="millet-notes" rows="2" placeholder="e.g. Less ghee, extra cardamom, diabetic friendly..." class="w-full p-2.5 bg-amber-50/50 border border-amber-300 rounded-xl text-sm focus:ring-2 focus:ring-maroon-700"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fab fa-whatsapp text-lg"></i> Send Custom Request on WhatsApp
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Printed Flyer & Menu Preview Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-amber-200 grid md:grid-cols-12 gap-8 items-center">
+            <div class="md:col-span-5">
+                <div class="relative group cursor-pointer overflow-hidden rounded-2xl border-2 border-gold-500 shadow-lg" onclick="openImageModal('images/flyer.jpg', 'Original Sri Skanda Home Foods Menu Flyer')">
+                    <img src="images/flyer.jpg" alt="Sri Skanda Home Foods Menu Flyer" class="w-full h-80 object-cover object-top group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white font-bold text-sm gap-2">
+                        <i class="fas fa-search-plus text-2xl"></i> View Full Printed Flyer
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7 space-y-4">
+                <span class="text-xs font-bold text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300 uppercase">Authentic Recipe Card</span>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-maroon-900 font-serif">Original Menu Flyer & Price Sheet</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Our recipes are rooted in authentic South Indian Brahmin traditions, passed down through generations. Click the flyer thumbnail to view the complete printed menu sheet, including all weight tiers and specialty notes.
+                </p>
+                <div class="pt-2 flex gap-3">
+                    <button onclick="openImageModal('images/flyer.jpg', 'Original Sri Skanda Home Foods Menu Flyer')" class="bg-maroon-800 hover:bg-maroon-900 text-amber-100 px-5 py-2.5 rounded-xl font-bold text-xs shadow transition flex items-center gap-2">
+                        <i class="fas fa-expand"></i> Inspect Original Flyer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials & Verified Reviews Section -->
+    <section id="reviews-section" class="bg-amber-100/60 border-t border-amber-300 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <span class="bg-amber-200 text-maroon-900 text-xs font-bold px-3 py-1 rounded-full uppercase border border-amber-300">Customer Love & Ratings</span>
+                <h3 class="text-3xl font-extrabold text-maroon-900 font-serif">What Our Customers Say</h3>
+                <p class="text-gray-600 text-xs sm:text-sm">Real feedback from families across Bangalore, Hyderabad, Chennai, and Mumbai who enjoy our authentic Brahmin foods daily.</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-6">
+                
+                <!-- Review Card 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-1 text-amber-500 text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-gray-400 font-bold ml-1">5.0</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-maroon-900 font-serif">"Pure Brahmin Taste & Aroma!"</h4>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">
+                            "The Munaga Podi reminds me of my grandmother's authentic recipe. Pure ghee Sunnundalu are so fresh and delicious. Ordering again!"
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-amber-100 flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-xs text-maroon-950">Lakshmi Narayana</p>
+                            <p class="text-[10px] text-gray-500">Bangalore • Verified Buyer</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                </div>
+
+                <!-- Review Card 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-1 text-amber-500 text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-gray-400 font-bold ml-1">5.0</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-maroon-900 font-serif">"Fresh, Healthy & Fast Shipping"</h4>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">
+                            "Ordered Avisa Podi and Ragi Laddus for my diabetic parents. Excellent health benefits and zero artificial preservatives. Arrived safely in 2 days."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-amber-100 flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-xs text-maroon-950">Srividya R.</p>
+                            <p class="text-[10px] text-gray-500">Hyderabad • Regular Customer</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                </div>
+
+                <!-- Review Card 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-1 text-amber-500 text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-gray-400 font-bold ml-1">5.0</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-maroon-900 font-serif">"Authentic South Indian Podis"</h4>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">
+                            "The Karivepaku Podi and Rasam Powder are amazing. Hand-roasted spices with real cow ghee aroma. Absolute perfection with hot rice."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-amber-100 flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-xs text-maroon-950">Ramesh Sharma</p>
+                            <p class="text-[10px] text-gray-500">Chennai • Verified Buyer</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                </div>
+
+                <!-- Review Card 4 -->
+                <div class="bg-white p-5 rounded-2xl shadow-md border border-amber-200 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-1 text-amber-500 text-xs">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-gray-400 font-bold ml-1">5.0</span>
+                        </div>
+                        <h4 class="font-bold text-sm text-maroon-900 font-serif">"Great Custom Festival Orders"</h4>
+                        <p class="text-xs text-gray-600 italic leading-relaxed">
+                            "Requested sugar-free jaggery millet laddus for a family function. They customized it perfectly and delivered with moisture-proof packing."
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-amber-100 flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-xs text-maroon-950">Radhika Rao</p>
+                            <p class="text-[10px] text-gray-500">Mumbai • Custom Order</p>
+                        </div>
+                        <span class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-0.5 rounded-full"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Feedback & Special Request Section -->
+    <section id="feedback-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-gradient-to-r from-maroon-900 to-maroon-950 text-white rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-gold-500 grid md:grid-cols-12 gap-8 items-center">
+            
+            <div class="md:col-span-6 space-y-4">
+                <span class="bg-amber-500/20 text-amber-300 text-xs font-extrabold px-3 py-1 rounded-full border border-amber-400/30 uppercase">We Value Your Experience</span>
+                <h3 class="text-2xl sm:text-4xl font-extrabold font-serif text-amber-100">Share Your Feedback or Request Special Flavors</h3>
+                <p class="text-amber-200/90 text-xs sm:text-sm leading-relaxed">
+                    Have feedback about our Podis or Sweets? Or looking for a custom recipe blend? Submit your review or request below — our culinary team reviews every response to serve you better!
+                </p>
+                <div class="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-amber-200">
+                    <div class="flex items-center gap-2"><i class="fas fa-star text-gold-400"></i> 100% Satisfaction Guarantee</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-heart text-red-400"></i> Made Fresh in Small Batches</div>
+                </div>
+            </div>
+
+            <div class="md:col-span-6">
+                <form id="feedback-form" onsubmit="handleFeedbackSubmit(event)" class="bg-white text-gray-900 p-6 rounded-2xl shadow-xl space-y-3.5">
+                    <h4 class="font-bold text-base text-maroon-900 border-b border-amber-200 pb-2 flex items-center justify-between">
+                        <span>Leave Customer Rating & Feedback</span>
+                        <span class="text-amber-500 text-xs"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+                    </h4>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">Your Full Name *</label>
+                            <input type="text" id="fb-name" placeholder="e.g. Sravanthi K." required class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-maroon-700">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-700 mb-1">City / Location *</label>
+                            <input type="text" id="fb-city" placeholder="e.g. Bangalore" required class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-maroon-700">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Product Purchased / Requesting *</label>
+                        <input type="text" id="fb-product" placeholder="e.g. Munaga Podi, Sunnundalu..." required class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-maroon-700">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Your Review & Comments *</label>
+                        <textarea id="fb-comments" rows="3" placeholder="Tell us how you enjoyed the taste, packing, or any special request..." required class="w-full p-2 bg-amber-50/50 border border-amber-300 rounded-lg text-xs focus:ring-2 focus:ring-maroon-700"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full gold-gradient text-maroon-950 font-black py-2.5 rounded-xl text-xs shadow-md hover:shadow-lg transition transform active:scale-98 flex items-center justify-center gap-2">
+                        <i class="fas fa-paper-plane"></i> Submit Customer Feedback
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Frequently Asked Questions (FAQ) Section -->
+    <section id="faq-section" class="bg-amber-50/80 border-t border-amber-200 py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="text-center space-y-2">
+                <span class="bg-amber-200 text-maroon-900 text-xs font-bold px-3 py-1 rounded-full uppercase border border-amber-300">Helpful Answers</span>
+                <h3 class="text-3xl font-extrabold text-maroon-900 font-serif">Frequently Asked Questions</h3>
+                <p class="text-gray-600 text-xs sm:text-sm">Everything you need to know about our authentic Brahmin recipes, shelf life, and order shipping.</p>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 space-y-2">
+                    <h4 class="font-bold text-maroon-900 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fas fa-question-circle text-amber-600"></i> What is the shelf life of Sri Skanda Podis and Sweets?
+                    </h4>
+                    <p class="text-gray-600 leading-relaxed pl-6">
+                        Our spiced powders (Podis) remain fresh for up to <strong>6 months</strong> when stored in airtight containers away from moisture. Traditional sweets prepared with pure cow ghee and organic jaggery stay fresh for <strong>30 to 45 days</strong>.
+                    </p>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 space-y-2">
+                    <h4 class="font-bold text-maroon-900 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fas fa-question-circle text-amber-600"></i> Are your products 100% Pure Brahmin & Garlic-Free?
+                    </h4>
+                    <p class="text-gray-600 leading-relaxed pl-6">
+                        Yes, absolutely! All our traditional podis and sweets are prepared following strict South Indian Brahmin culinary heritage with <strong>zero garlic</strong>, artificial flavorings, colors, or preservatives.
+                    </p>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 space-y-2">
+                    <h4 class="font-bold text-maroon-900 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fas fa-question-circle text-amber-600"></i> How are orders packed and shipped across India?
+                    </h4>
+                    <p class="text-gray-600 leading-relaxed pl-6">
+                        Every order is freshly prepared upon confirmation and packed in food-grade, moisture-proof sealed pouches. We dispatch nationwide via express courier services, delivering within <strong>2 to 4 business days</strong>.
+                    </p>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-amber-200 space-y-2">
+                    <h4 class="font-bold text-maroon-900 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fas fa-question-circle text-amber-600"></i> Can I request custom sweetener levels or bulk event boxes?
+                    </h4>
+                    <p class="text-gray-600 leading-relaxed pl-6">
+                        Yes! We prepare custom millet sweets (Ragi, Foxtail, Kodo laddus) with organic jaggery, dates & nuts (sugar-free), or country sugar. We also provide customized festival & wedding gift boxes. Contact us on WhatsApp for bulk quotes.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Site Footer -->
+    <footer class="site-footer bg-maroon-950 text-amber-100 border-t-4 border-gold-500 pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 mb-8">
+            
+            <!-- Brand Column -->
+            <div class="space-y-3 md:col-span-1">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo.jpg" alt="Sri Skanda Home Foods Logo" class="h-12 w-12 rounded-full border border-gold-500">
+                    <div>
+                        <h4 class="font-bold text-lg font-serif text-amber-200">Sri Skanda Home Foods</h4>
+                        <p class="text-[10px] text-amber-400 font-bold tracking-wider">PURE • AUTHENTIC • BRAHMIN FOODS</p>
+                    </div>
+                </div>
+                <p class="text-xs text-amber-200/80 leading-relaxed">
+                    Delivering authentic South Indian Brahmin podis, pure ghee laddus, and healthy millet sweets prepared with tradition and care.
+                </p>
+            </div>
+
+            <!-- Store Quick Links -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-sm text-gold-400 uppercase tracking-wider">Explore Menu</h4>
+                <ul class="space-y-2 text-xs text-amber-200/90">
+                    <li><a href="#menu-section" class="hover:text-gold-300 transition"><i class="fas fa-angle-right text-gold-500 mr-1.5"></i> Traditional Podis (Powders)</a></li>
+                    <li><a href="#menu-section" class="hover:text-gold-300 transition"><i class="fas fa-angle-right text-gold-500 mr-1.5"></i> Traditional Sweets & Chikkis</a></li>
+                    <li><a href="#custom-millet-section" class="hover:text-gold-300 transition"><i class="fas fa-angle-right text-gold-500 mr-1.5"></i> Custom Millet Sweets</a></li>
+                    <li><a href="#reviews-section" class="hover:text-gold-300 transition"><i class="fas fa-angle-right text-gold-500 mr-1.5"></i> Verified Customer Reviews</a></li>
+                    <li><a href="#faq-section" class="hover:text-gold-300 transition"><i class="fas fa-angle-right text-gold-500 mr-1.5"></i> Frequently Asked Questions</a></li>
+                </ul>
+            </div>
+
+            <!-- Customer Orders & Support -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-sm text-gold-400 uppercase tracking-wider">Orders & Support</h4>
+                <ul class="space-y-2 text-xs text-amber-200">
+                    <li class="flex items-center gap-2"><i class="fab fa-whatsapp text-green-400 text-base"></i> WhatsApp Order: <strong>+91 94900 68924</strong></li>
+                    <li class="flex items-center gap-2"><i class="fas fa-location-dot text-gold-400"></i> Location: Madanapalle Local Area</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-truck-fast text-gold-400"></i> Shipping: All Over India Express Courier</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-shield-heart text-green-400"></i> 100% Homemade Guarantee</li>
+                </ul>
+            </div>
+
+            <!-- Quality & Assurance Badges -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-sm text-gold-400 uppercase tracking-wider">Quality Assurance</h4>
+                <p class="text-xs text-amber-200/80 leading-relaxed">
+                    Freshly prepared in small batches upon order confirmation to ensure maximum aroma, authentic taste, and long shelf life.
+                </p>
+                <div class="pt-2 flex items-center flex-nowrap whitespace-nowrap gap-2 text-xs font-extrabold">
+                    <span class="bg-amber-950 text-amber-300 border border-amber-500/60 px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap inline-flex items-center gap-2">
+                        <i class="fas fa-check-circle text-amber-400"></i>
+                        <span>100% Pure Ghee</span>
+                        <span class="text-amber-500 font-bold">•</span>
+                        <span>Garlic-Free Brahmin Recipe</span>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Copyright & Developer Credit Bottom Bar -->
+        <div class="border-t border-amber-900/50 pt-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-amber-200/70">
+            <div>
+                © 2026 Sri Skanda Home Foods. All Rights Reserved.
+            </div>
+            <div class="text-[11px] text-amber-300 font-semibold tracking-wider">
+                Developer: Niranjan Kumar K
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Drawer (Slide-out) -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black/60 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+    
+    <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
+        
+        <!-- Cart Drawer Header -->
+        <div class="bg-maroon-900 text-white p-4 flex items-center justify-between border-b border-amber-500/40">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-amber-400 text-lg"></i>
+                <h3 class="font-bold text-base font-serif">Your Order Cart</h3>
+            </div>
+            <button id="close-cart-btn" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-amber-200 transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Cart Drawer Items Body -->
+        <div class="p-4 flex-1 overflow-y-auto">
+            <div id="empty-cart-message" class="text-center py-12 text-gray-500 space-y-3">
+                <i class="fas fa-basket-shopping text-5xl text-amber-300"></i>
+                <p class="font-bold text-sm text-gray-700">Your cart is currently empty.</p>
+                <p class="text-xs text-gray-500">Explore our delicious traditional podis & sweets menu and add items to order!</p>
+            </div>
+
+            <div id="cart-items-list"></div>
+
+            <!-- Customer Details Input in Cart -->
+            <div class="mt-6 border-t border-amber-200 pt-4 space-y-3">
+                <h4 class="font-bold text-xs text-maroon-900 uppercase tracking-wider flex items-center gap-1">
+                    <i class="fas fa-user-edit text-amber-600"></i> Customer Info & Order Options:
+                </h4>
+                
+                <!-- Fulfillment Type Selector (Home Delivery vs Store Pickup) -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" id="mode-delivery-btn" onclick="setFulfillmentMode('delivery')" class="py-1.5 px-3 rounded-xl border-2 font-bold text-xs flex items-center justify-center gap-1.5 transition bg-maroon-800 text-amber-100 border-maroon-900 shadow">
+                        <i class="fas fa-truck text-xs"></i> Home Delivery
+                    </button>
+                    <button type="button" id="mode-pickup-btn" onclick="setFulfillmentMode('pickup')" class="py-1.5 px-3 rounded-xl border-2 font-bold text-xs flex items-center justify-center gap-1.5 transition bg-amber-100 text-maroon-900 border-amber-300">
+                        <i class="fas fa-store text-xs"></i> Store Pickup
+                    </button>
+                </div>
+
+                <div>
+                    <input type="text" id="cust-name" placeholder="Your Full Name *" class="w-full p-2 text-xs border border-amber-300 rounded-lg focus:ring-1 focus:ring-maroon-700 bg-amber-50/40 text-black font-semibold" required>
+                </div>
+                <div>
+                    <input type="tel" id="cust-phone" placeholder="Your WhatsApp / Phone Number *" class="w-full p-2 text-xs border border-amber-300 rounded-lg focus:ring-1 focus:ring-maroon-700 bg-amber-50/40 text-black font-semibold" required>
+                </div>
+                <div id="address-fields-container">
+                    <input type="text" id="cust-address" placeholder="Delivery Street / Address *" class="w-full p-2 text-xs border border-amber-300 rounded-lg focus:ring-1 focus:ring-maroon-700 bg-amber-50/40 text-black font-semibold mb-2">
+                    <input type="text" id="cust-city" placeholder="City & Pincode (e.g. Bangalore - 560001) *" class="w-full p-2 text-xs border border-amber-300 rounded-lg focus:ring-1 focus:ring-maroon-700 bg-amber-50/40 text-black font-semibold">
+                </div>
+
+                <!-- Promo / Coupon Code Box -->
+                <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 space-y-1.5">
+                    <label class="block text-[10px] font-bold text-maroon-900 uppercase">Coupon Code (Try SKANDA10 or FREESHIP)</label>
+                    <div class="flex gap-1.5">
+                        <input type="text" id="coupon-code-input" placeholder="PROMO CODE" class="flex-1 px-2.5 py-1.5 bg-white border border-amber-300 rounded-lg text-xs font-bold text-black uppercase focus:ring-1 focus:ring-maroon-700">
+                        <button type="button" onclick="applyCouponCode()" class="bg-maroon-800 hover:bg-maroon-900 text-gold-300 font-bold px-3 py-1.5 rounded-lg text-xs shadow transition">
+                            Apply
+                        </button>
+                    </div>
+                    <div id="coupon-message" class="text-[10px] font-bold hidden"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Drawer Footer Checkout -->
+        <div class="p-4 bg-amber-50 border-t border-amber-200 space-y-3">
+            <div class="flex items-center justify-between text-base font-black text-maroon-900">
+                <span>Subtotal Amount:</span>
+                <span id="cart-subtotal" class="text-xl text-maroon-900">₹0</span>
+            </div>
+
+            <button id="whatsapp-order-btn" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-bold text-sm shadow-lg transition flex items-center justify-center gap-2 transform active:scale-98">
+                <i class="fab fa-whatsapp text-xl"></i> Complete Order on WhatsApp
+            </button>
+            <p class="text-[11px] text-center text-gray-500">Sends your formatted cart items directly to +91 94900 68924</p>
+        </div>
+
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="image-modal" class="fixed inset-0 z-50 bg-black/80 hidden backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+        <div class="relative max-w-4xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <div class="bg-maroon-900 text-white p-3 flex justify-between items-center">
+                <h4 id="modal-title" class="font-bold text-sm font-serif text-amber-200">Image Preview</h4>
+                <button onclick="closeImageModal()" class="text-amber-200 hover:text-white text-lg px-2"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-2 max-h-[80vh] overflow-auto flex justify-center bg-black/5">
+                <img id="modal-img" src="" alt="Zoom Preview" class="max-h-[75vh] w-auto object-contain rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Support Assistant Chat Button -->
+    <button id="toggle-ai-chat-btn" onclick="toggleAIChat()" class="fixed bottom-24 right-6 z-40 bg-maroon-800 hover:bg-maroon-900 text-amber-200 w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl transition-transform transform hover:scale-110 border-2 border-gold-500 group" title="Chat with Us">
+        <i class="fas fa-headset text-gold-400 group-hover:rotate-12 transition-transform"></i>
+    </button>
+
+    <!-- Floating Quick WhatsApp Button -->
+    <a href="https://wa.me/919490068924?text=Hi%20Sri%20Skanda%20Home%20Foods,%20I%20want%20to%20place%20an%20order." target="_blank" class="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl transition-transform transform hover:scale-110 border-2 border-white" title="WhatsApp Order">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Support Assistant Chatbot Drawer (Slide-Up Panel) -->
+    <div id="ai-chat-drawer" class="fixed bottom-6 right-6 z-50 w-full max-w-sm sm:max-w-md bg-white rounded-3xl shadow-2xl border-2 border-gold-500 hidden flex-col overflow-hidden transition-all duration-300 transform translate-y-4 opacity-0">
+        
+        <!-- Chat Header -->
+        <div class="bg-maroon-900 text-white p-4 flex items-center justify-between border-b border-gold-500">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gold-500/20 border border-gold-400 flex items-center justify-center text-gold-300 text-lg">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm font-serif text-amber-200 flex items-center gap-1.5">
+                        Sri Skanda Food Assistant <span class="bg-green-500 text-white text-[9px] font-sans px-1.5 py-0.2 rounded-full uppercase">Online</span>
+                    </h3>
+                    <p class="text-[10px] text-amber-300">Ask about Podis, Sweets, Pricing & Health</p>
+                </div>
+            </div>
+            <button onclick="toggleAIChat()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-amber-200 transition text-sm">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Messages Body -->
+        <div id="chat-messages-container" class="p-4 h-80 overflow-y-auto space-y-3 bg-amber-50/40 text-xs">
+            
+            <!-- Bot Welcome Message -->
+            <div class="flex items-start gap-2 max-w-[88%]">
+                <div class="w-7 h-7 rounded-full bg-maroon-800 text-gold-300 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl border border-amber-200 shadow-sm text-gray-800 space-y-1.5">
+                    <p class="font-semibold text-maroon-900">Namaste! 🙏 Welcome to Sri Skanda Home Foods Assistant.</p>
+                    <p class="text-gray-600">I can assist you with our authentic Brahmin podis, traditional sweets, pack pricing (100g to 1kg), ingredients, and health benefits!</p>
+                </div>
+            </div>
+
+            <!-- Quick Suggestion Chips -->
+            <div id="quick-suggestions" class="pt-2 flex flex-wrap gap-1.5">
+                <button onclick="sendQuickPrompt('What traditional podis do you recommend for rice?')" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-amber-300 transition">
+                    🌿 Recommend podis for rice
+                </button>
+                <button onclick="sendQuickPrompt('Are Dry Fruit Laddus sugar free?')" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-amber-300 transition">
+                    🥜 Sugar-free sweets?
+                </button>
+                <button onclick="sendQuickPrompt('What are the prices for Sunnundalu?')" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-amber-300 transition">
+                    💰 Sunnundalu prices
+                </button>
+                <button onclick="sendQuickPrompt('Do you ship all over India?')" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-amber-300 transition">
+                    🚚 Shipping details
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-3 bg-white border-t border-amber-200 flex items-center gap-2">
+            <input 
+                type="text" 
+                id="chat-user-input" 
+                placeholder="Ask about our food items, prices, shipping..." 
+                class="flex-1 p-2.5 bg-amber-50/60 border border-amber-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-maroon-700"
+                onkeypress="if(event.key === 'Enter') sendChatMessage()"
+            >
+            <button 
+                id="chat-send-btn" 
+                onclick="sendChatMessage()" 
+                class="bg-maroon-800 hover:bg-maroon-900 text-amber-100 w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shadow transition flex-shrink-0"
+            >
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+    <!-- PWA Installation Recommendation Banner (Bottom-Left Recommendation Widget) -->
+    <div id="pwa-install-banner" class="fixed bottom-6 left-6 z-40 max-w-sm w-[90%] sm:w-80 bg-white p-4 rounded-2xl shadow-2xl border-2 border-gold-500 hidden transition-all duration-300 transform translate-y-4 opacity-0">
+        <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-full bg-maroon-900 p-0.5 border border-gold-500 shadow flex-shrink-0">
+                    <img src="images/logo.jpg" alt="Sri Skanda App Icon" class="w-full h-full object-contain rounded-full">
+                </div>
+                <div>
+                    <h4 class="font-bold text-xs sm:text-sm font-serif text-maroon-900 flex items-center gap-1.5">
+                        Install Sri Skanda App <span class="bg-gold-500 text-maroon-950 text-[9px] font-sans font-black px-1.5 py-0.2 rounded uppercase">App</span>
+                    </h4>
+                    <p class="text-[11px] text-gray-600 leading-tight mt-0.5">Recommended: Add Sri Skanda App for 1-click orders & offline access!</p>
+                </div>
+            </div>
+            <button onclick="dismissPwaPrompt()" class="text-gray-400 hover:text-gray-600 text-xs p-1">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
+            <button id="pwa-install-btn" onclick="triggerPwaInstall()" class="flex-1 gold-gradient text-maroon-950 font-black py-2 px-3 rounded-xl text-xs shadow hover:shadow-md transition flex items-center justify-center gap-1.5">
+                <img src="images/logo.jpg" alt="Logo" class="w-3.5 h-3.5 rounded-full object-cover"> Install App
+            </button>
+            <button onclick="dismissPwaPrompt()" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 font-bold py-2 px-3 rounded-xl text-xs transition">
+                Dismiss
+            </button>
+        </div>
+    </div>
+
+    <!-- PWA Step-by-Step Installation Modal -->
+    <div id="pwa-install-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-gold-500 space-y-4">
+            <div class="flex justify-between items-center border-b border-amber-200 pb-3">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-gold-500">
+                    <div>
+                        <h3 class="font-bold text-base font-serif text-maroon-900">Install Sri Skanda Web App</h3>
+                        <p class="text-[10px] text-amber-800 font-bold uppercase">Fast Access & Offline Support</p>
+                    </div>
+                </div>
+                <button onclick="closePwaModal()" class="text-gray-400 hover:text-gray-700 text-lg"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-1">
+                    <p class="font-bold text-maroon-900 flex items-center gap-1.5">
+                        <i class="fab fa-chrome text-amber-700"></i> On Chrome / Android / Edge:
+                    </p>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-1">
+                        <li>Tap your browser menu (<strong>3 dots ⋮</strong> at top right or bottom).</li>
+                        <li>Select <strong>"Add to Home screen"</strong> or <strong>"Install App"</strong>.</li>
+                        <li>Confirm by tapping <strong>"Install"</strong>.</li>
+                    </ol>
+                </div>
+
+                <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-1">
+                    <p class="font-bold text-maroon-900 flex items-center gap-1.5">
+                        <i class="fab fa-apple text-gray-800"></i> On iPhone / iPad (Safari):
+                    </p>
+                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-1">
+                        <li>Tap the <strong>Share button <i class="fas fa-share-nodes text-blue-600"></i></strong> at the bottom bar.</li>
+                        <li>Scroll down and tap <strong>"Add to Home Screen <i class="fas fa-square-plus text-gray-800"></i>"</strong>.</li>
+                        <li>Tap <strong>"Add"</strong> at the top right corner.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <button onclick="closePwaModal()" class="w-full bg-maroon-800 hover:bg-maroon-900 text-amber-100 font-bold py-2.5 rounded-xl text-xs shadow transition">
+                Got it!
+            </button>
+        </div>
+    </div>
+
+    <!-- Customer My Orders Modal -->
+    <div id="my-orders-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white max-w-2xl w-full rounded-3xl shadow-2xl border-2 border-gold-500 overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-maroon-900 text-amber-100 p-4 sm:p-5 flex justify-between items-center border-b border-gold-500/40">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full gold-gradient flex items-center justify-center text-maroon-950 text-lg shadow">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base sm:text-lg font-serif text-gold-300 flex items-center gap-2">
+                            My Recent Orders
+                        </h3>
+                        <p class="text-xs text-amber-200/80">Track order status & history synced live with our kitchen</p>
+                    </div>
+                </div>
+                <button onclick="closeMyOrdersModal()" class="w-8 h-8 rounded-full bg-maroon-800 hover:bg-maroon-700 text-amber-200 flex items-center justify-center text-sm transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Sync & Phone Search Bar -->
+            <div class="p-3 sm:p-4 bg-amber-50/80 border-b border-amber-200 flex flex-wrap gap-2 items-center justify-between">
+                <div class="flex items-center gap-2 flex-1 min-w-[240px]">
+                    <input 
+                        type="tel" 
+                        id="my-orders-phone-input" 
+                        placeholder="Enter Phone Number to find past orders..." 
+                        class="w-full px-3 py-1.5 bg-white border border-amber-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-maroon-700"
+                        onkeypress="if(event.key === 'Enter') searchCustomerOrdersByPhone()"
+                    >
+                    <button onclick="searchCustomerOrdersByPhone()" class="bg-maroon-800 hover:bg-maroon-900 text-gold-300 px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1 flex-shrink-0">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+
+                <button onclick="syncCustomerOrders(true)" class="bg-white hover:bg-amber-100 text-maroon-900 border border-amber-300 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fas fa-sync-alt text-amber-700" id="sync-orders-icon"></i>
+                    <span>Sync Status</span>
+                </button>
+            </div>
+
+            <!-- Orders Container -->
+            <div id="my-orders-container" class="p-4 overflow-y-auto space-y-4 flex-1">
+                <!-- Dynamically rendered customer orders -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3 bg-amber-50 border-t border-amber-200 text-center text-xs text-amber-900 font-medium flex items-center justify-center gap-1.5">
+                <i class="fas fa-shield-alt text-amber-700"></i>
+                <span>Orders are saved in local storage & synced live. Removed orders from kitchen automatically clear from history.</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Customer Detailed Order Receipt Modal -->
+    <div id="customer-order-detail-modal" class="fixed inset-0 z-[70] bg-black/80 hidden backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white max-w-xl w-full rounded-3xl shadow-2xl border-2 border-gold-500 overflow-hidden flex flex-col my-auto max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="bg-maroon-900 text-amber-100 p-4 sm:p-5 flex justify-between items-center border-b-2 border-gold-500">
+                <div class="flex items-center gap-3">
+                    <img src="images/logo.jpg" alt="Sri Skanda Logo" class="w-10 h-10 rounded-full border border-gold-500 object-cover shadow">
+                    <div>
+                        <h3 class="font-bold text-base sm:text-lg font-serif text-gold-300 flex items-center gap-2">
+                            Order Receipt & Live Status
+                        </h3>
+                        <p id="detail-modal-order-ref" class="text-xs text-amber-200/90 font-mono font-bold">Ref: SKD-2026-XXXX</p>
+                    </div>
+                </div>
+                <button onclick="closeOrderDetailModal()" class="w-8 h-8 rounded-full bg-maroon-800 hover:bg-maroon-700 text-amber-200 flex items-center justify-center text-sm transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div id="customer-order-detail-body" class="p-4 sm:p-6 overflow-y-auto space-y-5 text-xs text-gray-800 flex-1">
+                <!-- Dynamically populated order detail -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3.5 bg-amber-50 border-t border-amber-200 flex flex-wrap items-center justify-between gap-2">
+                <button onclick="closeOrderDetailModal()" class="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-maroon-900 font-bold rounded-xl text-xs transition">
+                    <i class="fas fa-arrow-left mr-1"></i> Back to Orders
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="px-3.5 py-2 bg-maroon-800 hover:bg-maroon-900 text-gold-300 font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5 border border-gold-500">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                    <a id="detail-modal-wa-btn" href="#" target="_blank" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl text-xs shadow transition flex items-center gap-1.5">
+                        <i class="fab fa-whatsapp text-sm"></i> WhatsApp Support
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Include App Logic JS -->
+    <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,69 +1,111 @@
-<p align="center"><a href="https://tastyigniter" target="_blank"><img src="https://tastyigniter.com/images/logos/logo-padded.png" width="400"></a></p>
+# 🚩 Sri Skanda Home Foods | Traditional Brahmin Sweets & Podis
 
-<p align="center">
-<a href="https://packagist.org/packages/tastyigniter/TastyIgniter"><img src="https://img.shields.io/packagist/v/tastyigniter/TastyIgniter.svg?label=Stable&style=flat-square" alt="Stable"></a>
-<a href="https://packagist.org/packages/tastyigniter/TastyIgniter"><img src="https://poser.pugx.org/tastyigniter/flame/downloads" alt="Total Downloads"></a>
-<a href="https://github.com/tastyigniter/TastyIgniter/blob/master/LICENSE.txt"><img src="https://img.shields.io/github/license/tastyigniter/TastyIgniter.svg?label=License&style=flat-square" alt="License"></a>
-<a href="https://github.com/tastyigniter/TastyIgniter" title="PHP Versions Supported"><img alt="PHP Versions Supported" src="https://img.shields.io/badge/php-8.3%20to%208.4-777bb3.svg?logo=php&logoColor=white&labelColor=555555"></a>
-<a href="https://translate.tastyigniter.com/engage/tastyigniter/"><img src="https://translate.tastyigniter.com/widget/tastyigniter/svg-badge.svg" alt="Translate"></a>
-<a href="https://twitter.com/TastyIgniter"><img src="https://img.shields.io/twitter/follow/TastyIgniter.svg?label=Follow" alt="Twitter"></a>
-</p>
+[![Python Server](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![PWA Ready](https://img.shields.io/badge/PWA-Offline--Enabled-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](public/manifest.json)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%20v3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Status](https://img.shields.io/badge/Production-Active-success?style=for-the-badge)]()
 
-[TastyIgniter](https://tastyigniter.com/) provides a professional and reliable platform for restaurants wanting to offer
-online food ordering and table reservation to their customers.
+Welcome to the official repository for **Sri Skanda Home Foods** — an executive web application and management platform for authentic, garlic-free South Indian Brahmin podis, traditional sweets, and organic millet snacks prepared in pure cow ghee.
 
-![screenshot](https://tastyigniter.com/images/mockups/v4/Menus.png)
+---
 
-### Documentation
-The best place to learn TastyIgniter is by reading the [documentation](https://tastyigniter.com/docs)
+## 🌟 Executive Features Overview
 
-### Installation
-Please read the [Installation Guide](https://tastyigniter.com/docs/installation) for more information.
+### 🛒 Customer Storefront (`public/index.html`)
+* **Authentic Heritage Menu**: Dynamic catalog of traditional Podis, Sweets, and Custom Millet options.
+* **Weight-Based Pricing Pills**: Seamless selection between `100g`, `250g`, `500g`, and `1kg` packs with automatic price recalculation.
+* **WhatsApp Ordering & Cart Auto-Reset**: 1-click WhatsApp order generation with formatted receipts and automatic cart reset to 0 items upon submission.
+* **Live Order Tracking & My Orders Drawer**:
+  * **LocalStorage Persistence**: Placed orders are saved locally in the browser.
+  * **Live Kitchen Sync**: Synchronizes with the backend database (`/api/customer/sync-orders`). Orders deleted by store admins automatically clear from the customer's order history.
+  * **Interactive Detailed Receipt Modal**: Clicking any order card opens an itemized receipt with live status progress (Received ➔ Confirmed ➔ Dispatched ➔ Delivered), unit prices, quantities, and delivery details.
+  * **Phone Order Retrieval**: Look up past orders anytime across devices using a customer phone number.
+* **Progressive Web App (PWA)**:
+  * Full offline caching via Service Worker (`public/sw.js`).
+  * Web App Manifest (`public/manifest.json`) supporting standalone app installation on Mobile & Desktop.
+  * Smart bottom-left app installation recommendation banner.
+* **AI Knowledge Assistant**: Integrated chatbot powered by Groq LLM API providing instant advice on products, health benefits, and shipping.
 
-### Questions
-For questions and support please use the [Community Forum](https://forum.tastyigniter.com) or [Join us on Discord](https://tastyigniter.com/discord). 
+---
 
-### Issues
-Please report bugs using the [GitHub issue tracker](https://github.com/tastyigniter/TastyIgniter/issues)
+### 🛡️ Executive Admin Management Portal (`public/admin.html`)
+* **Security Passcode Protection**: Protected by server-side passcode verification (Default PIN: `1514`).
+* **In-App Passcode Management**: Admins can change their passcode directly inside the portal (`/api/admin/change-pin`) with immediate persistence.
+* **Instant Keyboard Shortcut**: Pressing single key **`a`** or **`A`** anywhere on the customer storefront clears existing session credentials and opens the passcode prompt for quick access.
+* **Live Orders Management**: View customer orders, filter by status (`Pending`, `Confirmed`, `Processing`, `Delivered`, `Cancelled`), search by customer name/phone/reference, update progress, or delete orders.
+* **Store Inventory & Pricing Editor**: Add, edit, or delete store menu items and pack pricing dynamically.
+* **Executive Sales Analytics**: Real-time revenue counters, total order stats, and delivery status monitors.
 
-### Stay in touch
-- [Follow us on Twitter](https://twitter.com/tastyigniter/) for announcements and updates.
-- [Blog](https://tastyigniter.com/blog) for tips and latest developments in the food industry.
+---
 
-## Contributing
-We would love your help building TastyIgniter! Please read the [Contributing Guidelines](.github/CONTRIBUTING.md) to learn how you can help.
+## 📂 Project Architecture
 
-Thank you to all the people who already contributed to TastyIgniter!
+```
+TastyIgniter/
+├── server.py                   # Lightweight HTTP Server & REST API Provider
+├── database/
+│   └── store_data.json         # Persistent JSON Database (Orders, Menu, Admin PIN)
+└── public/
+    ├── index.html              # Customer Storefront Application
+    ├── admin.html              # Executive Admin Management Portal
+    ├── app.js                  # Storefront Interactive Logic & LocalStorage Sync
+    ├── admin.js                # Admin Portal Logic & Passcode Management
+    ├── sw.js                   # PWA Offline Service Worker
+    ├── manifest.json           # Progressive Web App Manifest Configuration
+    ├── app-logo-192.png        # PWA Icon 192x192
+    ├── app-logo-512.png        # PWA Icon 512x512
+    └── images/                 # Product Images & Brand Assets
+```
 
-<a href="https://github.com/tastyigniter/TastyIgniter/graphs/contributors"><img src="https://opencollective.com/tastyigniter/contributors.svg?width=890&button=false" /></a>
+---
 
-## Supporting TastyIgniter
-TastyIgniter is an MIT-licensed community-driven project with its continuous development made possible by the support of these awesome [backers](#contributing). If you'd like to help support the future of the project, please consider:
-1. Donating development time to the project.
-2. Spreading the word about TastyIgniter.
-3. Becoming a sponsor by donating funds (see below).
+## 🔌 REST API Documentation
 
-## Sponsors
-Become a sponsor and get your logo on our README on Github with a link to your site. 
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/menu` | Fetch live store menu & pack pricing | No |
+| `POST` | `/api/orders` | Create a new customer order | No |
+| `POST` | `/api/customer/sync-orders` | Fetch active customer orders by IDs or Phone | No |
+| `POST` | `/api/admin/login` | Authenticate Admin passcode | No |
+| `POST` | `/api/admin/change-pin` | Update Admin security passcode | Yes |
+| `GET` | `/api/admin/orders` | Fetch all store orders with filters | Yes |
+| `PATCH` | `/api/admin/orders/<id>` | Update order status or payment status | Yes |
+| `DELETE` | `/api/admin/orders/<id>` | Delete an order record | Yes |
+| `POST` | `/api/admin/menu` | Add a new menu item | Yes |
+| `PUT` | `/api/admin/menu/<id>` | Edit an existing menu item | Yes |
+| `DELETE` | `/api/admin/menu/<id>` | Delete a menu item | Yes |
+| `POST` | `/api/chat` | AI Customer Assistant Chatbot Query | No |
 
-### via Open Collective
-<a href="https://opencollective.com/tastyigniter" target="_blank" rel="noopener noreferrer"><img src="https://opencollective.com/tastyigniter/sponsors.svg"></a>
+---
 
-<a href="https://opencollective.com/tastyigniter" target="_blank" rel="noopener noreferrer"><img src="https://opencollective.com/tastyigniter/backers.svg"></a>
+## 🚀 Quick Start & Installation
 
-### via Patreon
-[[Become a Patreon sponsor](https://www.patreon.com/sampoyigi)]
+### Prerequisites
+* Python **3.8+** installed on your system.
 
-## Built With :heart:
-- Laravel full-stack PHP framework
-- Bootstrap 5 front-end framework
+### 1. Launch Server
+Run the lightweight Python backend daemon:
+```bash
+python server.py
+```
+The server will start at `http://127.0.0.1:8000`.
 
-## Author
-TastyIgniter was created by [Samuel Adepoyigi](https://github.com/sampoyigi).
+### 2. Access Applications
+* **Customer Storefront**: Open `http://127.0.0.1:8000` in your web browser.
+* **Admin Portal**: Open `http://127.0.0.1:8000/admin.html` or press key **`a`** / **`A`** on the storefront.
+* **Default Admin Passcode**: `1514`
 
-## Security Vulnerabilities
-If you discover a security vulnerability within TastyIgniter, please send an e-mail to support@tastyigniter.com.
+---
 
-## License
-TastyIgniter is open-source software licensed under the [MIT license](https://tastyigniter.com/licence/).
+## 🚩 Brand Quality Assurance
 
+* **100% Pure Cow Ghee**: Made using traditional churning methods.
+* **Garlic-Free Brahmin Recipe**: Authentic family heritage formulations.
+* **No Added Preservatives**: Freshly prepared in small batches.
+* **Nationwide Shipping**: Safe food-grade vacuum packing delivered across India.
+
+---
+
+## 📄 License & Credits
+
+© 2026 **Sri Skanda Home Foods**, Madanapalle, Andhra Pradesh, India. All Rights Reserved.
