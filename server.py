@@ -646,40 +646,51 @@ INSTRUCTIONS:
 
         messages.append({'role': 'user', 'content': user_message})
 
-        try:
-            groq_payload = json.dumps({
-                'model': 'llama-3.3-70b-versatile',
-                'messages': messages,
-                'temperature': 0.6,
-                'max_tokens': 500
-            }).encode('utf-8')
+        candidate_models = [
+            'qwen/qwen3.6-27b',
+            'openai/gpt-oss-20b',
+            'groq/compound',
+            'llama-3.3-70b-versatile',
+            'llama-3.1-8b-instant'
+        ]
 
-            req = urllib.request.Request(
-                'https://api.groq.com/openai/v1/chat/completions',
-                data=groq_payload,
-                headers={
-                    'Authorization': f'Bearer {GROQ_API_KEY}',
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'Mozilla/5.0'
-                }
-            )
+        reply = None
 
-            res = urllib.request.urlopen(req)
-            groq_response = json.loads(res.read().decode('utf-8'))
+        for model_name in candidate_models:
+            try:
+                groq_payload = json.dumps({
+                    'model': model_name,
+                    'messages': messages,
+                    'temperature': 0.6,
+                    'max_tokens': 500
+                }).encode('utf-8')
 
-            reply = groq_response['choices'][0]['message']['content'].strip()
+                req = urllib.request.Request(
+                    'https://api.groq.com/openai/v1/chat/completions',
+                    data=groq_payload,
+                    headers={
+                        'Authorization': f'Bearer {GROQ_API_KEY}',
+                        'Content-Type': 'application/json',
+                        'User-Agent': 'Mozilla/5.0'
+                    }
+                )
 
-            self.send_json_response(200, {
-                "success": True,
-                "reply": reply
-            })
-        except Exception as err:
-            import traceback
-            traceback.print_exc()
-            self.send_json_response(200, {
-                "success": True,
-                "reply": "Namaste! 🙏 Thank you for contacting Sri Skanda Home Foods. We offer authentic South Indian Brahmin podis, pure ghee laddus, and traditional sweets made fresh in small batches with zero artificial preservatives. You can browse our complete menu, select pack weights (100g to 1kg), and place your order directly via WhatsApp at +91 94900 68924!"
-            })
+                res = urllib.request.urlopen(req, timeout=10)
+                groq_response = json.loads(res.read().decode('utf-8'))
+                reply = groq_response['choices'][0]['message']['content'].strip()
+                if reply:
+                    break
+            except Exception as model_err:
+                print(f"Groq Model {model_name} failed: {model_err}")
+                continue
+
+        if not reply:
+            reply = "Namaste! 🙏 Thank you for contacting Sri Skanda Home Foods. We offer authentic South Indian Brahmin podis, pure ghee laddus, and traditional sweets made fresh in small batches with zero artificial preservatives. You can browse our complete menu, select pack weights (100g to 1kg), and place your order directly via WhatsApp at +91 94900 68924!"
+
+        self.send_json_response(200, {
+            "success": True,
+            "reply": reply
+        })
 
     def send_json_response(self, code, data):
         self.send_response(code)
