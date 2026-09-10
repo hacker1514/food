@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <!-- Actions, Language Selector, Install App & Cart Button -->
+            <!-- Actions, Language Selector & Cart Button -->
             <div class="flex items-center gap-2 sm:gap-3">
                 <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-amber-100 border border-amber-300 text-maroon-900 font-bold text-xs px-2.5 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-maroon-700 shadow-sm cursor-pointer" title="Select Language">
                     <option value="en">🌐 EN</option>
@@ -117,11 +117,6 @@
                     <option value="hi">🇮🇳 हिंदी (HI)</option>
                     <option value="ta">🇮🇳 தமிழ் (TA)</option>
                 </select>
-
-                <button id="header-install-app-btn" onclick="triggerPwaInstall()" class="flex items-center gap-2 gold-gradient hover:opacity-95 text-maroon-950 px-3.5 py-2 rounded-full text-xs font-black transition shadow-sm border border-gold-500 transform active:scale-95" title="Install Sri Skanda Web App">
-                    <img src="images/logo.jpg" alt="Sri Skanda Logo" class="w-4 h-4 rounded-full border border-maroon-900 object-cover">
-                    <span data-i18n="install_app">Install App</span>
-                </button>
 
                 <a href="https://wa.me/919490068924" target="_blank" class="hidden sm:flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3.5 py-2 rounded-full text-xs font-bold transition shadow-sm">
                     <i class="fab fa-whatsapp text-sm"></i> <span data-i18n="whatsapp_us">WhatsApp Us</span>
@@ -837,78 +832,6 @@
             >
                 <i class="fas fa-paper-plane"></i>
             </button>
-        </div>
-
-    <!-- PWA Installation Recommendation Banner (Bottom-Left Recommendation Widget) -->
-    <div id="pwa-install-banner" class="fixed bottom-6 left-6 z-40 max-w-sm w-[90%] sm:w-80 bg-white p-4 rounded-2xl shadow-2xl border-2 border-gold-500 hidden transition-all duration-300 transform translate-y-4 opacity-0">
-        <div class="flex items-start justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-full bg-maroon-900 p-0.5 border border-gold-500 shadow flex-shrink-0">
-                    <img src="images/logo.jpg" alt="Sri Skanda App Icon" class="w-full h-full object-contain rounded-full">
-                </div>
-                <div>
-                    <h4 class="font-bold text-xs sm:text-sm font-serif text-maroon-900 flex items-center gap-1.5">
-                        Install Sri Skanda App <span class="bg-gold-500 text-maroon-950 text-[9px] font-sans font-black px-1.5 py-0.2 rounded uppercase">App</span>
-                    </h4>
-                    <p class="text-[11px] text-gray-600 leading-tight mt-0.5">Recommended: Add Sri Skanda App for 1-click orders & offline access!</p>
-                </div>
-            </div>
-            <button onclick="dismissPwaPrompt()" class="text-gray-400 hover:text-gray-600 text-xs p-1">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="mt-3 pt-2 border-t border-amber-100 flex items-center gap-2">
-            <button id="pwa-install-btn" onclick="triggerPwaInstall()" class="flex-1 gold-gradient text-maroon-950 font-black py-2 px-3 rounded-xl text-xs shadow hover:shadow-md transition flex items-center justify-center gap-1.5">
-                <img src="images/logo.jpg" alt="Logo" class="w-3.5 h-3.5 rounded-full object-cover"> Install App
-            </button>
-            <button onclick="dismissPwaPrompt()" class="bg-amber-100 hover:bg-amber-200 text-maroon-900 font-bold py-2 px-3 rounded-xl text-xs transition">
-                Dismiss
-            </button>
-        </div>
-    </div>
-
-    <!-- PWA Step-by-Step Installation Modal -->
-    <div id="pwa-install-modal" class="fixed inset-0 z-50 bg-black/70 hidden backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white max-w-md w-full rounded-3xl p-6 shadow-2xl border-2 border-gold-500 space-y-4">
-            <div class="flex justify-between items-center border-b border-amber-200 pb-3">
-                <div class="flex items-center gap-3">
-                    <img src="images/logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-gold-500">
-                    <div>
-                        <h3 class="font-bold text-base font-serif text-maroon-900">Install Sri Skanda Web App</h3>
-                        <p class="text-[10px] text-amber-800 font-bold uppercase">Fast Access & Offline Support</p>
-                    </div>
-                </div>
-                <button onclick="closePwaModal()" class="text-gray-400 hover:text-gray-700 text-lg"><i class="fas fa-times"></i></button>
-            </div>
-
-            <div class="space-y-3 text-xs">
-                <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-1">
-                    <p class="font-bold text-maroon-900 flex items-center gap-1.5">
-                        <i class="fab fa-chrome text-amber-700"></i> On Chrome / Android / Edge:
-                    </p>
-                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-1">
-                        <li>Tap your browser menu (<strong>3 dots ⋮</strong> at top right or bottom).</li>
-                        <li>Select <strong>"Add to Home screen"</strong> or <strong>"Install App"</strong>.</li>
-                        <li>Confirm by tapping <strong>"Install"</strong>.</li>
-                    </ol>
-                </div>
-
-                <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-1">
-                    <p class="font-bold text-maroon-900 flex items-center gap-1.5">
-                        <i class="fab fa-apple text-gray-800"></i> On iPhone / iPad (Safari):
-                    </p>
-                    <ol class="list-decimal list-inside text-gray-700 space-y-1 pl-1">
-                        <li>Tap the <strong>Share button <i class="fas fa-share-nodes text-blue-600"></i></strong> at the bottom bar.</li>
-                        <li>Scroll down and tap <strong>"Add to Home Screen <i class="fas fa-square-plus text-gray-800"></i>"</strong>.</li>
-                        <li>Tap <strong>"Add"</strong> at the top right corner.</li>
-                    </ol>
-                </div>
-            </div>
-
-            <button onclick="closePwaModal()" class="w-full bg-maroon-800 hover:bg-maroon-900 text-amber-100 font-bold py-2.5 rounded-xl text-xs shadow transition">
-                Got it!
-            </button>
-        </div>
     </div>
 
     <!-- Customer My Orders Modal -->

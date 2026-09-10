@@ -245,79 +245,11 @@
       "badge": "Made to Order",
       "image": "images/sweets.jpg",
       "description": "We prepare customized traditional sweets, laddus, and savory snacks using organic Millets tailored to your taste & dietary preference.",
-      "healthBenefit": "Gluten-free, diabetic-friendly, and packed with ancient grain nutrition.",
       "prices": {
         "Custom Quote": 0
       }
-    },
-    {
-      "id": "kaju-katli-special-839",
-      "name": "Kaju Katli Special",
-      "transliteration": "Cashew Nut Bar",
-      "category": "sweets",
-      "badge": "Festive Favorite",
-      "image": "images/podis.jpg",
-      "description": "Pure silver foil coated cashew sweet made with cow ghee.",
-      "healthBenefit": "Rich in healthy energy.",
-      "prices": {
-        "250g": 375,
-        "500g": 750,
-        "1kg": 1500
-      }
     }
   ],
-  "orders": [
-    {
-      "id": 2,
-      "order_number": "SKD-2026-7676",
-      "customer_name": "Niranjan Kumar K",
-      "customer_phone": "qqq",
-      "customer_address": "Chembakur",
-      "customer_city": "Madanapalle",
-      "items": [
-        {
-          "name": "Ragi Laddu",
-          "weight": "100g",
-          "price": 100,
-          "qty": 1,
-          "itemTotal": 100
-        }
-      ],
-      "total_amount": 100,
-      "order_status": "Pending",
-      "payment_status": "Unpaid",
-      "customer_notes": "",
-      "created_at": "2026-09-10 18:04:32"
-    },
-    {
-      "id": 1,
-      "order_number": "SKD-2026-4433",
-      "customer_name": "Brahmin Foodie",
-      "customer_phone": "9490068924",
-      "customer_address": "Main Street, Madanapalle",
-      "customer_city": "Madanapalle",
-      "items": [
-        {
-          "name": "Munaga Podi",
-          "weight": "500g",
-          "price": 600,
-          "qty": 2,
-          "itemTotal": 1200
-        },
-        {
-          "name": "Sunnundalu",
-          "weight": "250g",
-          "price": 320,
-          "qty": 1,
-          "itemTotal": 320
-        }
-      ],
-      "total_amount": 1520,
-      "order_status": "Pending",
-      "payment_status": "Unpaid",
-      "customer_notes": "",
-      "created_at": "2026-09-10 18:03:24"
-    }
-  ],
-  "admin_pin": "1234"
+  "orders": [],
+  "admin_pin": "1514"
 }
